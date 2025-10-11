@@ -1,0 +1,127 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PriceBite - Find the Best Price for Every Bite</title>
+    <link rel="stylesheet" href="Website_CSS.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <h1>PriceBite</h1>
+                </div>
+                
+                <div class="search-section">
+                    <div class="search-container">
+                        <input type="text" class="form-control search-input" placeholder="Search for food...">
+                        <button class="btn search-btn">
+                            <span>🔍</span>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="cart-section">
+                    <button class="btn btn--outline cart-btn">
+                        <span class="cart-icon">🛒</span>
+                        <span class="cart-text">Cart</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main">
+        <!-- Home Page -->
+        <section id="home-page" class="page home-page">
+            <div class="container">
+                <div class="hero-section">
+                    <h1 class="hero-title">PriceBite- Find the Best Price for Every Bite</h1>
+                    <p class="hero-subtitle">Compare prices from multiple restaurants and find the best deals on your favorite food!</p>
+                    <button class="btn btn--primary btn--lg compare-btn" id="compare-now-btn">
+                        Compare Now!
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Cart Page -->
+<section id="cart-page" class="page cart-page hidden">
+    <div class="container">
+        <div class="page-header">
+            <button class="btn btn--secondary back-btn" id="back-to-restaurants">
+                ← Back to Restaurants
+            </button>
+            <h2 class="page-title">Your Cart</h2>
+        </div>
+
+        <div id="cart-items" class="cart-items">
+            <!-- Items will be dynamically added here -->
+        </div>
+
+        <div class="cart-footer">
+            <h3>Total: <span id="cart-total">₹0</span></h3>
+            <button class="btn btn--primary checkout-btn">Checkout</button>
+        </div>
+    </div>
+</section>
+
+
+        <!-- Compare Page (Food Categories) -->
+        <section id="compare-page" class="page compare-page hidden">
+            <div class="container">
+                <div class="page-header">
+                    <button class="btn btn--secondary back-btn" id="back-to-home">
+                        ← Back to Home
+                    </button>
+                    <h2 class="page-title">Choose Food Category</h2>
+                </div>
+                
+                <div class="food-grid" id="food-grid">
+                    <!-- Food categories will be dynamically generated here -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Restaurants Page -->
+        <section id="restaurants-page" class="page restaurants-page hidden">
+            <div class="container">
+                <div class="page-header">
+                    <button class="btn btn--secondary back-btn" id="back-to-categories">
+                        ← Back to Categories
+                    </button>
+                    <h2 class="page-title" id="restaurants-title">Restaurants</h2>
+                </div>
+
+                <div class="restaurants-grid" id="restaurants-grid">
+                    <!-- Restaurant cards will be dynamically generated here -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Menu Page -->
+        <section id="menu-page" class="page menu-page hidden">
+            <div class="container">
+                <div class="page-header">
+                    <button class="btn btn--secondary back-btn" id="back-to-restaurants">
+                        ← Back to Restaurants
+                    </button>
+                    <h2 class="page-title">Burger King Menu</h2>
+                </div>
+
+                <div id="menu-grid">
+                    <!-- Menu items will be dynamically generated here -->
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- JavaScript -->
+    <script src="Website_JS.js"></script>
+</body>
+</html>

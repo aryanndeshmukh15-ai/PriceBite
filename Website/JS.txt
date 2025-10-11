@@ -1,0 +1,380 @@
+// PriceBite Application JavaScript
+
+// Application state
+const app = {
+    currentPage: 'home',
+    selectedCategory: null,
+    foodCategories: [
+        {"name": "Pizza", "emoji": "🍕", "id": "pizza"},
+        {"name": "Burger", "emoji": "🍔", "id": "burger"},
+        {"name": "Taco", "emoji": "🌮", "id": "taco"},
+        {"name": "Biryani", "emoji": "🍛", "id": "biryani"},
+        {"name": "Shawarma", "emoji": "🥙", "id": "shawarma"},
+        {"name": "Momos", "emoji": "🥟", "id": "momos"},
+        {"name": "Pasta", "emoji": "🍝", "id": "pasta"},
+        {"name": "Sandwich", "emoji": "🥪", "id": "sandwich"},
+        {"name": "Noodles", "emoji": "🍜", "id": "noodles"}
+    ],
+    restaurants: {
+        "pizza": [
+            {"name": "Dominos", "icon": "🍕", "id": "dominos"},
+            {"name": "Pizza Hut", "icon": "🍕", "id": "pizzahut"},
+            {"name": "La Pinos", "icon": "🍕", "id": "lapinos"},
+            {"name": "Ovenstory", "icon": "🍕", "id": "ovenstory"}
+        ],
+        "burger": [
+            {"name": "McDonald's", "icon": "🍔", "id": "mcdonalds"},
+            {"name": "Burger King", "icon": "🍔", "id": "burgerking"},
+            {"name": "Jumbo King", "icon": "🍔", "id": "jumboking"}
+        ],
+        "taco": [
+            {"name": "Taco Bell", "icon": "🌮", "id": "tacobell"}
+        ],
+        "biryani": [
+            {"name": "Behrouz", "icon": "🍛", "id": "behrouz"}
+        ],
+        "shawarma": [
+            {"name": "Shawarma Zone", "icon": "🥙", "id": "shawarmazone"}
+        ],
+        "momos": [
+            {"name": "Wow Momo", "icon": "🥟", "id": "wowmomo"}
+        ],
+        "pasta": [
+            {"name": "Coming Soon", "icon": "🍝", "id": "comingsoon"}
+        ],
+        "sandwich": [
+            {"name": "Coming Soon", "icon": "🥪", "id": "comingsoon"}
+        ],
+        "noodles": [
+            {"name": "Coming Soon", "icon": "🍜", "id": "comingsoon"}
+        ]
+    }
+};
+
+// DOM Elements
+const elements = {
+    homePage: null,
+    comparePage: null,
+    restaurantsPage: null,
+    compareBtn: null,
+    backToHomeBtn: null,
+    backToCategoriesBtn: null,
+    foodGrid: null,
+    restaurantsGrid: null,
+    restaurantsTitle: null,
+    logo: null,
+    searchInput: null,
+    cartBtn: null
+};
+
+// Initialize the application when DOM is loaded
+document.addEventListener('DOMContentLoaded', function() {
+    init();
+});
+
+// Initialize the application
+function init() {
+    console.log('🚀 Initializing PriceBite application...');
+    
+    // Cache DOM elements
+    cacheElements();
+    
+    // Set up event listeners
+    setupEventListeners();
+    
+    // Generate food items
+    generateFoodItems();
+    
+    // Show home page initially
+    showPage('home');
+    
+    console.log('✅ PriceBite application initialized successfully!');
+}
+
+// Cache all DOM elements
+function cacheElements() {
+    elements.homePage = document.getElementById('home-page');
+    elements.comparePage = document.getElementById('compare-page');
+    elements.restaurantsPage = document.getElementById('restaurants-page');
+    elements.compareBtn = document.getElementById('compare-now-btn');
+    elements.backToHomeBtn = document.getElementById('back-to-home');
+    elements.backToCategoriesBtn = document.getElementById('back-to-categories');
+    elements.foodGrid = document.getElementById('food-grid');
+    elements.restaurantsGrid = document.getElementById('restaurants-grid');
+    elements.restaurantsTitle = document.getElementById('restaurants-title');
+    elements.logo = document.querySelector('.logo h1');
+    elements.searchInput = document.querySelector('.search-input');
+    elements.cartBtn = document.querySelector('.cart-btn');
+}
+
+// Set up all event listeners
+function setupEventListeners() {
+    // Compare Now button
+    if (elements.compareBtn) {
+        elements.compareBtn.addEventListener('click', function() {
+            console.log('🔄 Navigating to food categories...');
+            showPage('compare');
+        });
+    }
+
+    // Back to home button
+    if (elements.backToHomeBtn) {
+        elements.backToHomeBtn.addEventListener('click', function() {
+            console.log('🔄 Navigating back to home...');
+            showPage('home');
+        });
+    }
+
+    // Back to categories button
+    if (elements.backToCategoriesBtn) {
+        elements.backToCategoriesBtn.addEventListener('click', function() {
+            console.log('🔄 Navigating back to categories...');
+            showPage('compare');
+        });
+    }
+
+    // Logo click - go to home
+    if (elements.logo) {
+        elements.logo.addEventListener('click', function() {
+            console.log('🏠 Logo clicked - going home...');
+            showPage('home');
+        });
+    }
+
+    // Search functionality
+    if (elements.searchInput) {
+        elements.searchInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                handleSearch();
+            }
+        });
+    }
+
+    // Cart button
+    if (elements.cartBtn) {
+        elements.cartBtn.addEventListener('click', function() {
+            alert('🛒 Cart functionality coming soon!');
+        });
+    }
+
+    // Search button
+    const searchBtn = document.querySelector('.search-btn');
+    if (searchBtn) {
+        searchBtn.addEventListener('click', handleSearch);
+    }
+}
+
+// Handle search functionality
+function handleSearch() {
+    const query = elements.searchInput.value.trim();
+    if (query) {
+        alert(`🔍 Search functionality coming soon! You searched for: "${query}"`);
+        elements.searchInput.value = '';
+    }
+}
+
+// Show specific page and hide others
+function showPage(pageName) {
+    console.log(`📄 Showing page: ${pageName}`);
+    
+    // Hide all pages first
+    const pages = document.querySelectorAll('.page');
+    pages.forEach(page => {
+        page.classList.add('hidden');
+    });
+    
+    // Show the requested page
+    switch(pageName) {
+        case 'home':
+            elements.homePage.classList.remove('hidden');
+            app.currentPage = 'home';
+            break;
+        case 'compare':
+            elements.comparePage.classList.remove('hidden');
+            app.currentPage = 'compare';
+            break;
+        case 'restaurants':
+            elements.restaurantsPage.classList.remove('hidden');
+            app.currentPage = 'restaurants';
+            break;
+        default:
+            console.warn(`Unknown page: ${pageName}`);
+            elements.homePage.classList.remove('hidden');
+            app.currentPage = 'home';
+    }
+    
+    // Add fade-in animation
+    const activePage = document.querySelector('.page:not(.hidden)');
+    if (activePage) {
+        activePage.classList.add('fade-in');
+        setTimeout(() => {
+            activePage.classList.remove('fade-in');
+        }, 500);
+    }
+}
+
+// Generate food category items
+function generateFoodItems() {
+    if (!elements.foodGrid) {
+        console.error('Food grid element not found!');
+        return;
+    }
+
+    console.log('🍽️ Generating food category items...');
+    
+    elements.foodGrid.innerHTML = '';
+    
+    app.foodCategories.forEach(food => {
+        const foodItem = createFoodItem(food);
+        elements.foodGrid.appendChild(foodItem);
+    });
+}
+
+// Create individual food item element
+function createFoodItem(food) {
+    const item = document.createElement('div');
+    item.className = 'food-item';
+    item.setAttribute('data-category', food.id);
+    
+    item.innerHTML = `
+        <span class="food-emoji">${food.emoji}</span>
+        <h3 class="food-name">${food.name}</h3>
+    `;
+    
+    // Add click event listener
+    item.addEventListener('click', function() {
+        console.log(`🍽️ Selected food category: ${food.name}`);
+        selectFoodCategory(food.id, food.name);
+    });
+    
+    // Add keyboard navigation
+    item.setAttribute('tabindex', '0');
+    item.addEventListener('keypress', function(e) {
+        if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            item.click();
+        }
+    });
+    
+    return item;
+}
+
+// Select food category and show restaurants
+function selectFoodCategory(categoryId, categoryName) {
+    app.selectedCategory = categoryId;
+    
+    // Update restaurants page title
+    elements.restaurantsTitle.textContent = `${categoryName} Restaurants`;
+    
+    // Generate restaurant items
+    generateRestaurantItems(categoryId);
+    
+    // Show restaurants page
+    showPage('restaurants');
+}
+
+// Generate restaurant items for selected category
+function generateRestaurantItems(categoryId) {
+    if (!elements.restaurantsGrid) {
+        console.error('Restaurants grid element not found!');
+        return;
+    }
+
+    console.log(`🏪 Generating restaurants for category: ${categoryId}`);
+    
+    elements.restaurantsGrid.innerHTML = '';
+    
+    const restaurants = app.restaurants[categoryId] || [];
+    
+    if (restaurants.length === 0) {
+        const noRestaurants = document.createElement('div');
+        noRestaurants.className = 'no-restaurants';
+        noRestaurants.innerHTML = '<p>No restaurants available for this category yet.</p>';
+        elements.restaurantsGrid.appendChild(noRestaurants);
+        return;
+    }
+    
+    restaurants.forEach(restaurant => {
+        const restaurantItem = createRestaurantItem(restaurant);
+        elements.restaurantsGrid.appendChild(restaurantItem);
+    });
+}
+
+// Create individual restaurant item element
+function createRestaurantItem(restaurant) {
+    const item = document.createElement('div');
+    item.className = 'restaurant-item';
+    
+    // Add special class for "Coming Soon" items
+    if (restaurant.id === 'comingsoon') {
+        item.classList.add('coming-soon');
+    }
+    
+    item.setAttribute('data-restaurant', restaurant.id);
+    
+    item.innerHTML = `
+        <span class="restaurant-icon">${restaurant.icon}</span>
+        <h3 class="restaurant-name">${restaurant.name}</h3>
+    `;
+    
+    // Add click event listener
+    item.addEventListener('click', function() {
+        if (restaurant.id === 'comingsoon') {
+            alert('🚧 This restaurant will be available soon!');
+        } else {
+            console.log(`🏪 Selected restaurant: ${restaurant.name}`);
+            selectRestaurant(restaurant);
+        }
+    });
+    
+    // Add keyboard navigation
+    item.setAttribute('tabindex', '0');
+    item.addEventListener('keypress', function(e) {
+        if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            item.click();
+        }
+    });
+    
+    return item;
+}
+
+// Select restaurant (placeholder for future functionality)
+function selectRestaurant(restaurant) {
+    alert(`🏪 You selected ${restaurant.name}!\n\n🔄 Price comparison functionality coming soon!`);
+}
+
+// Utility function to add loading state
+function showLoading(element) {
+    element.innerHTML = '<div class="loading">⏳ Loading...</div>';
+}
+
+// Utility function to handle errors
+function handleError(error, context = 'Unknown') {
+    console.error(`❌ Error in ${context}:`, error);
+    alert(`Sorry, something went wrong. Please try again.`);
+}
+
+// Performance optimization - debounce search
+function debounce(func, wait) {
+    let timeout;
+    return function executedFunction(...args) {
+        const later = () => {
+            clearTimeout(timeout);
+            func(...args);
+        };
+        clearTimeout(timeout);
+        timeout = setTimeout(later, wait);
+    };
+}
+
+// Export for potential module use
+window.PriceBite = {
+    app,
+    elements,
+    showPage,
+    selectFoodCategory,
+    selectRestaurant
+};
+
+console.log('📱 PriceBite JavaScript loaded successfully!');
