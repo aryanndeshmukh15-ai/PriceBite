@@ -11,30 +11,40 @@ const app = {
     foodCategories: [
         { "name": "Pizza", "emoji": "🍕", "id": "pizza" },
         { "name": "Burger", "emoji": "🍔", "id": "burger" },
+        { "name": "Chicken", "emoji": "🍗", "id": "chicken" },
         { "name": "Taco", "emoji": "🌮", "id": "taco" },
         { "name": "Biryani", "emoji": "🍛", "id": "biryani" },
         { "name": "Shawarma", "emoji": "🥙", "id": "shawarma" },
         { "name": "Momos", "emoji": "🥟", "id": "momos" },
         { "name": "Pasta", "emoji": "🍝", "id": "pasta" },
-        { "name": "Sandwich", "emoji": "🥪", "id": "sandwich" },
-        { "name": "Noodles", "emoji": "🍜", "id": "noodles" }
+        { "name": "Sandwich", "emoji": "🥪", "id": "sandwich" }
     ],
     restaurants: {
         "pizza": [
-            { "name": "Domino's", "icon": "🍕", "id": "dominos", "sheetName": "Domino's" },
-            { "name": "Pizza Hut", "icon": "🍕", "id": "pizzahut", "sheetName": "Pizza Hut" }
+            { "name": "Domino's", "icon": "dominos_logo.png", "id": "dominos", "sheetName": "Domino's", "isImage": true },
+            { "name": "Pizza Hut", "icon": "pizzahut_logo.png", "id": "pizzahut", "sheetName": "Pizza Hut", "isImage": true }
         ],
         "burger": [
-            { "name": "McDonald's", "icon": "🍔", "id": "mcdonalds", "sheetName": "McDonald's" },
-            { "name": "Burger King", "icon": "🍔", "id": "burgerking", "sheetName": "Burger King" }
+            { "name": "McDonald's", "icon": "mcdonalds_logo.png", "id": "mcdonalds", "sheetName": "McDonald's", "isImage": true },
+            { "name": "Burger King", "icon": "burgerking_logo.png", "id": "burgerking", "sheetName": "Burger King", "isImage": true }
         ],
-        "taco": [],
-        "biryani": [],
-        "shawarma": [],
-        "momos": [],
+        "chicken": [
+            { "name": "KFC", "icon": "kfc_logo.png", "id": "kfc", "sheetName": "KFC", "isImage": true }
+        ],
+        "taco": [
+            { "name": "Taco Bell", "icon": "tacobell_logo.png", "id": "tacobell", "sheetName": "Taco Bell", "isImage": true }
+        ],
+        "biryani": [
+            { "name": "Behrouz Biryani", "icon": "behrouz_logo.png", "id": "behrouz", "sheetName": "Behrouz Biryani", "isImage": true }
+        ],
+        "shawarma": [
+            { "name": "Shawarma Zone", "icon": "shawarma_logo.jpg", "id": "shawarmazone", "sheetName": "Shawarma Zone", "isImage": true }
+        ],
+        "momos": [
+            { "name": "Wow! Momo", "icon": "wowmomo_logo.jpg", "id": "wowmomo", "sheetName": "Wow! Momo", "isImage": true }
+        ],
         "pasta": [],
-        "sandwich": [],
-        "noodles": []
+        "sandwich": []
     }
 };
 
@@ -53,6 +63,9 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Load embedded data
     loadEmbeddedData();
+    
+    // Setup search functionality
+    setupSearch();
     
     console.log('✅ App initialized successfully');
 });
@@ -146,20 +159,55 @@ function setupNavigation() {
     if (checkoutBtn) {
         checkoutBtn.onclick = function() {
             console.log('🛒 Checkout clicked');
-            alert('Checkout functionality coming soon! 🚀');
+            
+            const checkoutUrl = checkoutBtn.getAttribute('data-checkout-url');
+            const platform = checkoutBtn.getAttribute('data-platform');
+            
+            if (checkoutUrl && checkoutUrl !== '#') {
+                const itemsList = app.cart.map(item => `${item.quantity}x ${item.name}`).join(', ');
+                const confirmMessage = `You will be redirected to ${platform} to complete your order.\n\nItems in your cart: ${itemsList}\n\nNote: You'll need to manually add these items on ${platform} as we cannot automatically transfer your cart.\n\nContinue?`;
+                
+                if (confirm(confirmMessage)) {
+                    console.log(`🔗 Redirecting to ${platform}: ${checkoutUrl}`);
+                    
+                    // Create a summary popup before redirect
+                    showCartSummaryBeforeRedirect(platform);
+                    
+                    // Redirect after a short delay
+                    setTimeout(() => {
+                        window.open(checkoutUrl, '_blank');
+                    }, 2000);
+                }
+            } else {
+                alert('Please add items to cart to checkout! 🛒');
+            }
         };
     }
 }
 
 function showPage(pageName) {
     console.log('📄 Showing page:', pageName);
-    
+
+    // Clear restaurant menu if leaving restaurant-related pages
+    if (pageName !== 'restaurants' && app.selectedRestaurant) {
+        console.log('🧹 Clearing restaurant menu as user is navigating away');
+        clearRestaurantMenu();
+    }
+
+    // Hide restaurant data section for non-restaurant pages
+    if (pageName !== 'restaurants') {
+        const restaurantDataSection = document.getElementById('restaurant-data-section');
+        if (restaurantDataSection) {
+            restaurantDataSection.classList.add('hidden');
+        }
+    }
+
     // Hide all pages
     const pages = document.querySelectorAll('.page');
     pages.forEach(page => {
         page.classList.add('hidden');
     });
-    
+
     // Show selected page
     const targetPage = document.getElementById(pageName + '-page');
     if (targetPage) {
@@ -200,52 +248,104 @@ function generateFoodItems() {
 
 function selectFoodCategory(categoryId, categoryName) {
     console.log('🍽️ Selecting category:', categoryName);
-    
+
     app.selectedCategory = categoryId;
-    
+
     const restaurantsTitle = document.getElementById('restaurants-title');
     if (restaurantsTitle) {
         restaurantsTitle.textContent = `${categoryName} Restaurants`;
     }
-    
+
+    // Clear any existing restaurant menu when switching categories
+    if (app.selectedRestaurant) {
+        console.log('🧹 Clearing previous restaurant menu when switching categories');
+        clearRestaurantMenu();
+    }
+
+    // Hide restaurant data section when switching categories
+    const restaurantDataSection = document.getElementById('restaurant-data-section');
+    if (restaurantDataSection) {
+        restaurantDataSection.classList.add('hidden');
+    }
+
     generateRestaurantItems(categoryId);
     showPage('restaurants');
 }
 
 function generateRestaurantItems(categoryId) {
     console.log('🏪 Generating restaurant items for:', categoryId);
-    
+
     const restaurantsGrid = document.getElementById('restaurants-grid');
     if (!restaurantsGrid) {
         console.error('❌ Restaurants grid not found');
         return;
     }
-    
+
     restaurantsGrid.innerHTML = '';
     const restaurants = app.restaurants[categoryId] || [];
-    
-    restaurants.forEach(restaurant => {
+
+    restaurants.forEach(r => {
         const item = document.createElement('div');
         item.className = 'restaurant-item';
-        item.innerHTML = `<span class="restaurant-icon">${restaurant.icon}</span><h3 class="restaurant-name">${restaurant.name}</h3>`;
+
+        // Check if it's an image or emoji
+        if (r.isImage) {
+            item.innerHTML = `<div class="restaurant-icon"><img src="${r.icon}" alt="${r.name}" class="restaurant-logo"></div><h3 class="restaurant-name">${r.name}</h3>`;
+        } else {
+            item.innerHTML = `<span class="restaurant-icon">${r.icon}</span><h3 class="restaurant-name">${r.name}</h3>`;
+        }
+
         item.style.cursor = 'pointer';
-        
+
         item.onclick = function() {
-            console.log('🏪 Restaurant selected:', restaurant.name);
-            selectRestaurant(restaurant);
+            console.log('🏪 Restaurant selected:', r.name);
+            selectRestaurant(r);
         };
-        
+
         restaurantsGrid.appendChild(item);
     });
-    
+
     console.log(`✅ Generated ${restaurants.length} restaurant items`);
+}
+
+function clearRestaurantMenu() {
+    console.log('🧹 Clearing restaurant menu...');
+
+    const restaurantTableContainer = document.getElementById('restaurant-table-container');
+    const excelUploadSection = document.getElementById('excel-upload-section');
+    const restaurantDataSection = document.getElementById('restaurant-data-section');
+    const restaurantDataTitle = document.getElementById('restaurant-data-title');
+
+    if (restaurantTableContainer) {
+        restaurantTableContainer.innerHTML = '';
+    }
+
+    if (excelUploadSection) {
+        excelUploadSection.style.display = 'none';
+    }
+
+    if (restaurantDataSection) {
+        restaurantDataSection.classList.add('hidden');
+    }
+
+    if (restaurantDataTitle) {
+        restaurantDataTitle.textContent = '';
+    }
+
+    // Reset selected restaurant
+    app.selectedRestaurant = null;
+
+    console.log('✅ Restaurant menu cleared');
 }
 
 function selectRestaurant(restaurant) {
     console.log('🏪 Selecting restaurant:', restaurant.name);
-    
+
+    // Clear any existing menu first
+    clearRestaurantMenu();
+
     app.selectedRestaurant = restaurant;
-    
+
     const restaurantDataSection = document.getElementById('restaurant-data-section');
     const restaurantDataTitle = document.getElementById('restaurant-data-title');
     const excelUploadSection = document.getElementById('excel-upload-section');
@@ -374,12 +474,14 @@ function renderRestaurantMenu(menuData) {
         return;
     }
     
+    const restaurantName = app.selectedRestaurant ? app.selectedRestaurant.name : 'Restaurant';
+    
     let html = '<div class="table-container"><table class="menu-table"><thead><tr>';
     html += '<th>Item Name</th>';
     html += '<th>Category</th>';
     html += '<th class="price-header">Price on Swiggy</th>';
     html += '<th class="price-header">Price on Zomato</th>';
-    html += '<th class="price-header">Price on Own App</th>';
+    html += `<th class="price-header">Price on ${restaurantName} App</th>`;
     html += '<th class="cart-header">Add to Cart</th>';
     html += '</tr></thead><tbody>';
     
@@ -525,11 +627,29 @@ function processExcelFile(arrayBuffer) {
 function addToCart(itemName, category, swiggyPrice, zomatoPrice, ownAppPrice) {
     console.log('🛒 Adding to cart:', itemName);
     
+    const restaurantName = app.selectedRestaurant ? app.selectedRestaurant.name : 'Unknown';
+    
+    // Check if cart has items from a different restaurant
+    if (app.cart.length > 0 && app.cart[0].restaurant !== restaurantName) {
+        const currentRestaurant = app.cart[0].restaurant;
+        const confirmMessage = `Your cart contains items from ${currentRestaurant}.\n\nYou can only order from one restaurant at a time.\n\nDo you want to clear your cart and add items from ${restaurantName}?`;
+        
+        if (confirm(confirmMessage)) {
+            // Clear cart and add new item
+            app.cart = [];
+            console.log('🗑️ Cart cleared for new restaurant');
+        } else {
+            // User cancelled, don't add item
+            console.log('❌ User cancelled adding item from different restaurant');
+            return;
+        }
+    }
+    
     const cartItem = {
         id: Date.now() + Math.random(), // Unique ID
         name: itemName,
         category: category,
-        restaurant: app.selectedRestaurant ? app.selectedRestaurant.name : 'Unknown',
+        restaurant: restaurantName,
         prices: {
             swiggy: swiggyPrice,
             zomato: zomatoPrice,
@@ -539,9 +659,13 @@ function addToCart(itemName, category, swiggyPrice, zomatoPrice, ownAppPrice) {
         addedAt: new Date()
     };
     
-    // Check if item already exists in cart
+    // Check if the EXACT same item already exists in cart (same name, restaurant, and prices)
     const existingItem = app.cart.find(item => 
-        item.name === itemName && item.restaurant === cartItem.restaurant
+        item.name === itemName && 
+        item.restaurant === cartItem.restaurant &&
+        item.prices.swiggy === cartItem.prices.swiggy &&
+        item.prices.zomato === cartItem.prices.zomato &&
+        item.prices.ownApp === cartItem.prices.ownApp
     );
     
     if (existingItem) {
@@ -560,7 +684,13 @@ function updateCartCounter() {
     const cartBtn = document.querySelector('.cart-btn');
     if (cartBtn) {
         const totalItems = app.cart.reduce((sum, item) => sum + item.quantity, 0);
-        cartBtn.textContent = `🛒 Cart (${totalItems})`;
+        
+        if (totalItems === 0) {
+            cartBtn.textContent = `🛒 Cart`;
+        } else {
+            const restaurantName = app.cart[0].restaurant;
+            cartBtn.textContent = `🛒 Cart (${totalItems}) - ${restaurantName}`;
+        }
     }
 }
 
@@ -617,7 +747,7 @@ function renderCartPage() {
                         ₹${item.prices.zomato || 0}
                     </div>
                     <div class="price-option price-own-app">
-                        <strong>Own App</strong><br>
+                        <strong>${item.restaurant} App</strong><br>
                         ₹${item.prices.ownApp || 0}
                     </div>
                     
@@ -639,6 +769,16 @@ function renderCartPage() {
     document.getElementById('total-swiggy').textContent = `₹${totalSwiggy}`;
     document.getElementById('total-zomato').textContent = `₹${totalZomato}`;
     document.getElementById('total-own-app').textContent = `₹${totalOwnApp}`;
+    
+    // Update own app label with restaurant name
+    const ownAppLabel = document.getElementById('own-app-label');
+    if (ownAppLabel && app.cart.length > 0) {
+        const restaurantName = app.cart[0].restaurant;
+        ownAppLabel.textContent = `Best Price (${restaurantName} App):`;
+    }
+    
+    // Update checkout button with cheapest option
+    updateCheckoutButton(totalSwiggy, totalZomato, totalOwnApp);
 }
 
 function updateQuantity(index, change) {
@@ -672,6 +812,414 @@ function clearCart() {
     renderCartPage();
     showSuccessMessage('Cart cleared');
     console.log('🛒 Cart cleared');
+}
+
+function updateCheckoutButton(totalSwiggy, totalZomato, totalOwnApp) {
+    const checkoutBtn = document.getElementById('checkout-btn');
+    if (!checkoutBtn || app.cart.length === 0) return;
+    
+    const restaurantName = app.cart[0].restaurant;
+    const restaurantAppName = `${restaurantName} App`;
+    
+    // Find the cheapest option
+    const prices = [
+        { platform: 'Swiggy', total: totalSwiggy, url: 'https://www.swiggy.com' },
+        { platform: 'Zomato', total: totalZomato, url: 'https://www.zomato.com' },
+        { platform: restaurantAppName, total: totalOwnApp, url: getCheapestRestaurantUrl() }
+    ];
+    
+    // Filter out zero prices and find minimum
+    const validPrices = prices.filter(p => p.total > 0);
+    
+    if (validPrices.length === 0) {
+        checkoutBtn.textContent = '🛒 Proceed to Checkout';
+        return;
+    }
+    
+    const cheapest = validPrices.reduce((min, current) => 
+        current.total < min.total ? current : min
+    );
+    
+    // Update button text and store URL for click handler
+    checkoutBtn.textContent = `🛒 Order on ${cheapest.platform} (₹${cheapest.total})`;
+    checkoutBtn.setAttribute('data-checkout-url', cheapest.url);
+    checkoutBtn.setAttribute('data-platform', cheapest.platform);
+    
+    console.log(`💰 Cheapest option: ${cheapest.platform} at ₹${cheapest.total}`);
+}
+
+function getCheapestRestaurantUrl() {
+    if (app.cart.length === 0) return '#';
+    
+    const restaurant = app.cart[0].restaurant;
+    
+    // Restaurant app URLs (you can customize these)
+    const restaurantUrls = {
+        "McDonald's": "https://www.mcdelivery.co.in",
+        "Burger King": "https://www.burgerking.in",
+        "KFC": "https://online.kfc.co.in",
+        "Domino's": "https://www.dominos.co.in",
+        "Pizza Hut": "https://www.pizzahut.co.in",
+        "Taco Bell": "https://www.tacobell.co.in",
+        "Wow! Momo": "https://www.wowmomo.in",
+        "Shawarma Zone": "https://www.shawarmazone.in",
+        "Behrouz Biryani": "https://www.behrouz.in"
+    };
+    
+    return restaurantUrls[restaurant] || '#';
+}
+
+// Search functionality
+function setupSearch() {
+    console.log('🔍 Setting up search functionality...');
+    
+    const searchInput = document.querySelector('.search-input');
+    const searchBtn = document.querySelector('.search-btn');
+    
+    if (searchInput && searchBtn) {
+        // Search button click
+        searchBtn.onclick = function() {
+            performSearch();
+        };
+        
+        // Enter key press
+        searchInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                performSearch();
+            }
+        });
+        
+        // Real-time search as user types (with debounce)
+        let searchTimeout;
+        searchInput.addEventListener('input', function() {
+            clearTimeout(searchTimeout);
+            searchTimeout = setTimeout(() => {
+                if (searchInput.value.trim().length >= 2) {
+                    performSearch();
+                }
+            }, 300); // Wait 300ms after user stops typing
+        });
+        
+        console.log('✅ Search functionality setup complete');
+    } else {
+        console.error('❌ Search elements not found');
+    }
+}
+
+function performSearch() {
+    const searchInput = document.querySelector('.search-input');
+    const query = searchInput.value.trim().toLowerCase();
+    
+    console.log('🔍 Performing search for:', query);
+    
+    if (!query) {
+        showPage('home');
+        return;
+    }
+    
+    if (query.length < 2) {
+        showErrorMessage('Please enter at least 2 characters to search');
+        return;
+    }
+    
+    // Search across all restaurant data
+    const searchResults = searchItems(query);
+    
+    if (searchResults.length === 0) {
+        showSearchResults([], query);
+    } else {
+        showSearchResults(searchResults, query);
+    }
+}
+
+function searchItems(query) {
+    const results = [];
+    
+    if (!app.excelData) {
+        console.log('❌ No data available for search');
+        return results;
+    }
+    
+    // Search across all restaurants
+    Object.entries(app.excelData).forEach(([restaurantName, items]) => {
+        items.forEach(item => {
+            // Search in item name and category
+            const itemName = (item.ItemName || '').toLowerCase();
+            const category = (item.Category || '').toLowerCase();
+            
+            if (itemName.includes(query) || category.includes(query)) {
+                results.push({
+                    ...item,
+                    restaurant: restaurantName,
+                    matchType: itemName.includes(query) ? 'name' : 'category'
+                });
+            }
+        });
+    });
+    
+    // Sort results by relevance (exact matches first, then partial matches)
+    results.sort((a, b) => {
+        const aName = (a.ItemName || '').toLowerCase();
+        const bName = (b.ItemName || '').toLowerCase();
+        
+        // Exact matches first
+        if (aName === query && bName !== query) return -1;
+        if (bName === query && aName !== query) return 1;
+        
+        // Then matches at the beginning
+        if (aName.startsWith(query) && !bName.startsWith(query)) return -1;
+        if (bName.startsWith(query) && !aName.startsWith(query)) return 1;
+        
+        // Then alphabetical
+        return aName.localeCompare(bName);
+    });
+    
+    console.log(`🔍 Found ${results.length} search results`);
+    return results;
+}
+
+function showSearchResults(results, query) {
+    console.log('📄 Showing search results page');
+    
+    // Create search results page if it doesn't exist
+    let searchPage = document.getElementById('search-results-page');
+    if (!searchPage) {
+        createSearchResultsPage();
+        searchPage = document.getElementById('search-results-page');
+    }
+    
+    // Update search results content
+    const searchTitle = document.getElementById('search-results-title');
+    const searchResultsContainer = document.getElementById('search-results-container');
+    
+    if (results.length === 0) {
+        searchTitle.textContent = `No results found for "${query}"`;
+        searchResultsContainer.innerHTML = `
+            <div class="no-results">
+                <div class="no-results-icon">🔍</div>
+                <h3>No items found</h3>
+                <p>Try searching for:</p>
+                <ul>
+                    <li>Pizza, Burger, Margherita</li>
+                    <li>McAloo, Cheese, Paneer</li>
+                    <li>Veg Pizza, Burger, Side</li>
+                </ul>
+                <button onclick="document.querySelector('.search-input').value=''; showPage('home')" class="back-to-home-btn">
+                    🏠 Back to Home
+                </button>
+            </div>
+        `;
+    } else {
+        searchTitle.textContent = `Found ${results.length} results for "${query}"`;
+        renderSearchResults(results);
+    }
+    
+    showPage('search-results');
+}
+
+function createSearchResultsPage() {
+    const main = document.querySelector('main');
+    const searchPageHTML = `
+        <section id="search-results-page" class="page hidden">
+            <div class="container">
+                <div class="page-header">
+                    <button id="back-from-search" class="back-btn">← Back</button>
+                    <h2 id="search-results-title">Search Results</h2>
+                </div>
+                <div id="search-results-container"></div>
+            </div>
+        </section>
+    `;
+    
+    main.insertAdjacentHTML('beforeend', searchPageHTML);
+    
+    // Setup back button
+    const backFromSearchBtn = document.getElementById('back-from-search');
+    if (backFromSearchBtn) {
+        backFromSearchBtn.onclick = function() {
+            showPage('home');
+        };
+    }
+}
+
+function renderSearchResults(results) {
+    const container = document.getElementById('search-results-container');
+    
+    let html = '<div class="search-results-table"><table class="menu-table"><thead><tr>';
+    html += '<th>Item Name</th>';
+    html += '<th>Restaurant</th>';
+    html += '<th>Category</th>';
+    html += '<th class="price-header">Price on Swiggy</th>';
+    html += '<th class="price-header">Price on Zomato</th>';
+    html += '<th class="price-header">Price on Restaurant App</th>';
+    html += '<th class="cart-header">Add to Cart</th>';
+    html += '</tr></thead><tbody>';
+    
+    results.forEach((item, index) => {
+        html += '<tr>';
+        html += `<td><strong>${item.ItemName || ''}</strong></td>`;
+        html += `<td><span class="restaurant-badge">${item.restaurant}</span></td>`;
+        html += `<td>${item.Category || ''}</td>`;
+        html += `<td class="price-cell price-swiggy">${item.Swiggy ? '₹' + item.Swiggy : '-'}</td>`;
+        html += `<td class="price-cell price-zomato">${item.Zomato ? '₹' + item.Zomato : '-'}</td>`;
+        html += `<td class="price-cell price-own-app">${item.Own_App ? '₹' + item.Own_App : '-'}</td>`;
+        html += `<td class="cart-cell">
+            <button class="add-to-cart-btn" onclick="addToCartFromSearch('${item.ItemName}', '${item.Category}', '${item.restaurant}', ${item.Swiggy || 0}, ${item.Zomato || 0}, ${item.Own_App || 0})" 
+                    style="background: #e74c3c; color: white; border: none; padding: 8px 12px; border-radius: 4px; cursor: pointer; font-size: 12px;">
+                🛒 Add to Cart
+            </button>
+        </td>`;
+        html += '</tr>';
+    });
+    
+    html += '</tbody></table></div>';
+    container.innerHTML = html;
+}
+
+function addToCartFromSearch(itemName, category, restaurant, swiggyPrice, zomatoPrice, ownAppPrice) {
+    console.log('🛒 Adding to cart from search:', itemName);
+    
+    // Check if cart has items from a different restaurant
+    if (app.cart.length > 0 && app.cart[0].restaurant !== restaurant) {
+        const currentRestaurant = app.cart[0].restaurant;
+        const confirmMessage = `Your cart contains items from ${currentRestaurant}.\n\nYou can only order from one restaurant at a time.\n\nDo you want to clear your cart and add items from ${restaurant}?`;
+        
+        if (confirm(confirmMessage)) {
+            // Clear cart and add new item
+            app.cart = [];
+            console.log('🗑️ Cart cleared for new restaurant');
+        } else {
+            // User cancelled, don't add item
+            console.log('❌ User cancelled adding item from different restaurant');
+            return;
+        }
+    }
+    
+    const cartItem = {
+        id: Date.now() + Math.random(),
+        name: itemName,
+        category: category,
+        restaurant: restaurant,
+        prices: {
+            swiggy: swiggyPrice,
+            zomato: zomatoPrice,
+            ownApp: ownAppPrice
+        },
+        quantity: 1,
+        addedAt: new Date()
+    };
+    
+    // Check if the EXACT same item already exists in cart (same name, restaurant, and prices)
+    const existingItem = app.cart.find(item => 
+        item.name === itemName && 
+        item.restaurant === restaurant &&
+        item.prices.swiggy === cartItem.prices.swiggy &&
+        item.prices.zomato === cartItem.prices.zomato &&
+        item.prices.ownApp === cartItem.prices.ownApp
+    );
+    
+    if (existingItem) {
+        existingItem.quantity += 1;
+        showSuccessMessage(`${itemName} quantity updated in cart (${existingItem.quantity})`);
+    } else {
+        app.cart.push(cartItem);
+        showSuccessMessage(`${itemName} from ${restaurant} added to cart!`);
+    }
+    
+    updateCartCounter();
+    console.log('🛒 Cart updated from search');
+}
+
+function showCartSummaryBeforeRedirect(platform) {
+    // Create overlay
+    const overlay = document.createElement('div');
+    overlay.style.cssText = `
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0,0,0,0.8);
+        z-index: 10000;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    `;
+    
+    // Create popup
+    const popup = document.createElement('div');
+    popup.style.cssText = `
+        background: white;
+        padding: 2rem;
+        border-radius: 10px;
+        max-width: 500px;
+        width: 90%;
+        text-align: center;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    `;
+    
+    let popupHTML = `
+        <h3 style="color: #2c3e50; margin-bottom: 1rem;">🛒 Cart Summary for ${platform}</h3>
+        <p style="color: #7f8c8d; margin-bottom: 1.5rem;">Please add these items manually on ${platform}:</p>
+        <div style="background: #f8f9fa; padding: 1rem; border-radius: 5px; margin-bottom: 1.5rem;">
+    `;
+    
+    app.cart.forEach(item => {
+        const price = platform.includes('Swiggy') ? item.prices.swiggy : 
+                     platform.includes('Zomato') ? item.prices.zomato : 
+                     item.prices.ownApp;
+        
+        popupHTML += `
+            <div style="display: flex; justify-content: space-between; padding: 0.5rem 0; border-bottom: 1px solid #eee;">
+                <span><strong>${item.quantity}x</strong> ${item.name}</span>
+                <span style="color: #e74c3c;"><strong>₹${price || 0}</strong></span>
+            </div>
+        `;
+    });
+    
+    const totalPrice = app.cart.reduce((sum, item) => {
+        const price = platform.includes('Swiggy') ? item.prices.swiggy : 
+                     platform.includes('Zomato') ? item.prices.zomato : 
+                     item.prices.ownApp;
+        return sum + (price || 0) * item.quantity;
+    }, 0);
+    
+    popupHTML += `
+        </div>
+        <div style="font-size: 1.2rem; font-weight: bold; color: #2c3e50; margin-bottom: 1rem;">
+            Total: ₹${totalPrice}
+        </div>
+        <p style="color: #e74c3c; font-size: 0.9rem; margin-bottom: 1rem;">
+            ⚠️ Cart items cannot be automatically transferred. You'll need to search and add these items manually on ${platform}.
+        </p>
+        <div style="color: #6c757d; font-size: 0.8rem;">
+            Redirecting in <span id="countdown">2</span> seconds...
+        </div>
+    `;
+    
+    popup.innerHTML = popupHTML;
+    overlay.appendChild(popup);
+    document.body.appendChild(overlay);
+    
+    // Countdown timer
+    let seconds = 2;
+    const countdownEl = document.getElementById('countdown');
+    const timer = setInterval(() => {
+        seconds--;
+        if (countdownEl) countdownEl.textContent = seconds;
+        if (seconds <= 0) {
+            clearInterval(timer);
+            document.body.removeChild(overlay);
+        }
+    }, 1000);
+    
+    // Allow clicking to close
+    overlay.onclick = function(e) {
+        if (e.target === overlay) {
+            clearInterval(timer);
+            document.body.removeChild(overlay);
+        }
+    };
 }
 
 console.log('📱 PriceBite Simple App Loaded!');
