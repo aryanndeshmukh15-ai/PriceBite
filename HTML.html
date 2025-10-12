@@ -88,6 +88,52 @@
                 </div>
             </div>
         </section>
+
+        <!-- Cart Page -->
+        <section id="cart-page" class="page hidden">
+            <div class="container">
+                <div class="page-header">
+                    <button id="back-to-menu" class="back-btn">← Back to Menu</button>
+                    <h2 id="cart-title">Your Cart</h2>
+                </div>
+                
+                <div id="cart-content">
+                    <div id="cart-items-container"></div>
+                    
+                    <div id="cart-summary" class="cart-summary hidden">
+                        <div class="summary-row">
+                            <span>Total Items:</span>
+                            <span id="total-items">0</span>
+                        </div>
+                        <div class="summary-row">
+                            <span>Best Price (Swiggy):</span>
+                            <span id="total-swiggy">₹0</span>
+                        </div>
+                        <div class="summary-row">
+                            <span>Best Price (Zomato):</span>
+                            <span id="total-zomato">₹0</span>
+                        </div>
+                        <div class="summary-row">
+                            <span>Best Price (Own App):</span>
+                            <span id="total-own-app">₹0</span>
+                        </div>
+                        
+                        <div class="cart-actions">
+                            <button id="clear-cart-btn" class="clear-cart-btn">🗑️ Clear Cart</button>
+                            <button id="checkout-btn" class="checkout-btn">🛒 Proceed to Checkout</button>
+                        </div>
+                    </div>
+                    
+                    <div id="empty-cart" class="empty-cart hidden">
+                        <div class="empty-cart-icon">🛒</div>
+                        <h3>Your cart is empty</h3>
+                        <p>Add some delicious items to get started!</p>
+                        <button id="continue-shopping" class="continue-shopping-btn">Continue Shopping</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+        </section>
     </main>
 
     <script src="restaurant_data.js"></script>

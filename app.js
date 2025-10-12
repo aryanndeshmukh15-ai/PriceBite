@@ -7,6 +7,7 @@ const app = {
     selectedCategory: null,
     selectedRestaurant: null,
     excelData: null,
+    cart: [],
     foodCategories: [
         { "name": "Pizza", "emoji": "🍕", "id": "pizza" },
         { "name": "Burger", "emoji": "🍔", "id": "burger" },
@@ -92,11 +93,61 @@ function setupNavigation() {
     // Logo click
     const logo = document.querySelector('.logo h1');
     if (logo) {
-        logo.onclick = function() {
+        logo.addEventListener('click', () => {
             console.log('🏠 Logo clicked');
             showPage('home');
-        };
+        });
         logo.style.cursor = 'pointer';
+    }
+    
+    // Cart button
+    const cartBtn = document.querySelector('.cart-btn');
+    if (cartBtn) {
+        cartBtn.onclick = function() {
+            console.log('🛒 Cart button clicked');
+            viewCart();
+        };
+        cartBtn.style.cursor = 'pointer';
+        console.log('✅ Cart button setup');
+    }
+    
+    // Cart page navigation
+    const backToMenuBtn = document.getElementById('back-to-menu');
+    if (backToMenuBtn) {
+        backToMenuBtn.onclick = function() {
+            console.log('🔙 Back to menu clicked');
+            if (app.selectedRestaurant) {
+                showPage('restaurants');
+            } else {
+                showPage('compare');
+            }
+        };
+    }
+    
+    const continueShoppingBtn = document.getElementById('continue-shopping');
+    if (continueShoppingBtn) {
+        continueShoppingBtn.onclick = function() {
+            console.log('🛍️ Continue shopping clicked');
+            showPage('compare');
+        };
+    }
+    
+    const clearCartBtn = document.getElementById('clear-cart-btn');
+    if (clearCartBtn) {
+        clearCartBtn.onclick = function() {
+            console.log('🗑️ Clear cart clicked');
+            if (confirm('Are you sure you want to clear your cart?')) {
+                clearCart();
+            }
+        };
+    }
+    
+    const checkoutBtn = document.getElementById('checkout-btn');
+    if (checkoutBtn) {
+        checkoutBtn.onclick = function() {
+            console.log('🛒 Checkout clicked');
+            alert('Checkout functionality coming soon! 🚀');
+        };
     }
 }
 
@@ -329,15 +380,22 @@ function renderRestaurantMenu(menuData) {
     html += '<th class="price-header">Price on Swiggy</th>';
     html += '<th class="price-header">Price on Zomato</th>';
     html += '<th class="price-header">Price on Own App</th>';
+    html += '<th class="cart-header">Add to Cart</th>';
     html += '</tr></thead><tbody>';
     
-    menuData.forEach(item => {
+    menuData.forEach((item, index) => {
         html += '<tr>';
         html += `<td>${item.ItemName || ''}</td>`;
         html += `<td>${item.Category || ''}</td>`;
         html += `<td class="price-cell price-swiggy">${item.Swiggy ? '₹' + item.Swiggy : '-'}</td>`;
         html += `<td class="price-cell price-zomato">${item.Zomato ? '₹' + item.Zomato : '-'}</td>`;
         html += `<td class="price-cell price-own-app">${item.Own_App ? '₹' + item.Own_App : '-'}</td>`;
+        html += `<td class="cart-cell">
+            <button class="add-to-cart-btn" onclick="addToCart('${item.ItemName}', '${item.Category}', ${item.Swiggy || 0}, ${item.Zomato || 0}, ${item.Own_App || 0})" 
+                    style="background: #e74c3c; color: white; border: none; padding: 8px 12px; border-radius: 4px; cursor: pointer; font-size: 12px;">
+                🛒 Add to Cart
+            </button>
+        </td>`;
         html += '</tr>';
     });
     
@@ -461,6 +519,159 @@ function processExcelFile(arrayBuffer) {
     } catch (error) {
         console.error('❌ Excel processing failed:', error);
     }
+}
+
+// Cart functionality
+function addToCart(itemName, category, swiggyPrice, zomatoPrice, ownAppPrice) {
+    console.log('🛒 Adding to cart:', itemName);
+    
+    const cartItem = {
+        id: Date.now() + Math.random(), // Unique ID
+        name: itemName,
+        category: category,
+        restaurant: app.selectedRestaurant ? app.selectedRestaurant.name : 'Unknown',
+        prices: {
+            swiggy: swiggyPrice,
+            zomato: zomatoPrice,
+            ownApp: ownAppPrice
+        },
+        quantity: 1,
+        addedAt: new Date()
+    };
+    
+    // Check if item already exists in cart
+    const existingItem = app.cart.find(item => 
+        item.name === itemName && item.restaurant === cartItem.restaurant
+    );
+    
+    if (existingItem) {
+        existingItem.quantity += 1;
+        showSuccessMessage(`${itemName} quantity updated in cart (${existingItem.quantity})`);
+    } else {
+        app.cart.push(cartItem);
+        showSuccessMessage(`${itemName} added to cart!`);
+    }
+    
+    updateCartCounter();
+    console.log('🛒 Cart updated:', app.cart.length, 'items');
+}
+
+function updateCartCounter() {
+    const cartBtn = document.querySelector('.cart-btn');
+    if (cartBtn) {
+        const totalItems = app.cart.reduce((sum, item) => sum + item.quantity, 0);
+        cartBtn.textContent = `🛒 Cart (${totalItems})`;
+    }
+}
+
+function viewCart() {
+    console.log('🛒 Viewing cart');
+    showPage('cart');
+    renderCartPage();
+}
+
+function renderCartPage() {
+    const cartItemsContainer = document.getElementById('cart-items-container');
+    const cartSummary = document.getElementById('cart-summary');
+    const emptyCart = document.getElementById('empty-cart');
+    
+    if (app.cart.length === 0) {
+        // Show empty cart
+        cartItemsContainer.innerHTML = '';
+        cartSummary.classList.add('hidden');
+        emptyCart.classList.remove('hidden');
+        return;
+    }
+    
+    // Hide empty cart, show summary
+    emptyCart.classList.add('hidden');
+    cartSummary.classList.remove('hidden');
+    
+    // Render cart items
+    let cartHTML = '';
+    let totalSwiggy = 0, totalZomato = 0, totalOwnApp = 0, totalItems = 0;
+    
+    app.cart.forEach((item, index) => {
+        totalItems += item.quantity;
+        totalSwiggy += (item.prices.swiggy || 0) * item.quantity;
+        totalZomato += (item.prices.zomato || 0) * item.quantity;
+        totalOwnApp += (item.prices.ownApp || 0) * item.quantity;
+        
+        cartHTML += `
+            <div class="cart-item">
+                <div class="cart-item-header">
+                    <div>
+                        <h3 class="cart-item-name">${item.name}</h3>
+                        <p class="cart-item-restaurant">📍 ${item.restaurant}</p>
+                        <span class="cart-item-category">${item.category}</span>
+                    </div>
+                </div>
+                
+                <div class="cart-item-details">
+                    <div class="price-option price-swiggy">
+                        <strong>Swiggy</strong><br>
+                        ₹${item.prices.swiggy || 0}
+                    </div>
+                    <div class="price-option price-zomato">
+                        <strong>Zomato</strong><br>
+                        ₹${item.prices.zomato || 0}
+                    </div>
+                    <div class="price-option price-own-app">
+                        <strong>Own App</strong><br>
+                        ₹${item.prices.ownApp || 0}
+                    </div>
+                    
+                    <div class="quantity-controls">
+                        <button class="quantity-btn" onclick="updateQuantity(${index}, -1)">-</button>
+                        <span class="quantity-display">${item.quantity}</span>
+                        <button class="quantity-btn" onclick="updateQuantity(${index}, 1)">+</button>
+                        <button class="remove-item-btn" onclick="removeFromCart(${index})">🗑️ Remove</button>
+                    </div>
+                </div>
+            </div>
+        `;
+    });
+    
+    cartItemsContainer.innerHTML = cartHTML;
+    
+    // Update summary
+    document.getElementById('total-items').textContent = totalItems;
+    document.getElementById('total-swiggy').textContent = `₹${totalSwiggy}`;
+    document.getElementById('total-zomato').textContent = `₹${totalZomato}`;
+    document.getElementById('total-own-app').textContent = `₹${totalOwnApp}`;
+}
+
+function updateQuantity(index, change) {
+    if (app.cart[index]) {
+        app.cart[index].quantity += change;
+        
+        if (app.cart[index].quantity <= 0) {
+            app.cart.splice(index, 1);
+        }
+        
+        updateCartCounter();
+        renderCartPage();
+        console.log('🛒 Quantity updated');
+    }
+}
+
+function removeFromCart(index) {
+    if (app.cart[index]) {
+        const itemName = app.cart[index].name;
+        app.cart.splice(index, 1);
+        updateCartCounter();
+        renderCartPage();
+        showSuccessMessage(`${itemName} removed from cart`);
+        console.log('🛒 Item removed from cart');
+    }
+}
+
+function clearCart() {
+    app.cart = [];
+    updateCartCounter();
+    renderCartPage();
+    showSuccessMessage('Cart cleared');
+    console.log('🛒 Cart cleared');
 }
 
 console.log('📱 PriceBite Simple App Loaded!');
