@@ -659,3 +659,107 @@ body {
     outline: 2px solid #e74c3c;
     outline-offset: 2px;
 }
+
+/* Excel Upload Section Styles */
+.excel-upload-container {
+    background: #f8f9fa;
+    border: 2px dashed #e74c3c;
+    border-radius: 12px;
+    padding: 2rem;
+    text-align: center;
+    margin: 1rem 0;
+    transition: all 0.3s ease;
+}
+
+.excel-upload-container:hover {
+    border-color: #c0392b;
+    background: #f5f5f5;
+}
+
+.upload-info p {
+    margin: 0.5rem 0;
+    color: #333;
+    font-size: 1.1rem;
+}
+
+.file-input {
+    display: none;
+}
+
+.upload-btn {
+    display: inline-block;
+    margin: 1rem 0;
+    padding: 12px 24px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.upload-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(231, 76, 60, 0.3);
+}
+
+.upload-note {
+    font-size: 0.9rem;
+    color: #666;
+    margin-top: 0.5rem;
+}
+
+/* Price Column Styling */
+.price-swiggy {
+    color: #ff6900;
+    font-weight: 600;
+}
+
+.price-zomato {
+    color: #e23744;
+    font-weight: 600;
+}
+
+.price-own-app {
+    color: #2d7d32;
+    font-weight: 600;
+}
+
+/* Enhanced table for multiple price columns */
+.menu-table th.price-header {
+    background: linear-gradient(135deg, #e74c3c, #c0392b);
+    text-align: center;
+    font-weight: 700;
+}
+
+.menu-table td.price-cell {
+    text-align: center;
+    font-weight: 600;
+    font-size: 1rem;
+}
+
+/* Loading and status messages */
+.loading {
+    text-align: center;
+    padding: 2rem;
+    font-size: 1.2rem;
+    color: #666;
+}
+
+.success-message {
+    background: #d4edda;
+    border: 1px solid #c3e6cb;
+    color: #155724;
+    padding: 1rem;
+    border-radius: 8px;
+    margin: 1rem 0;
+    text-align: center;
+}
+
+.error-message {
+    background: #f8d7da;
+    border: 1px solid #f5c6cb;
+    color: #721c24;
+    padding: 1rem;
+    border-radius: 8px;
+    margin: 1rem 0;
+    text-align: center;
+}
