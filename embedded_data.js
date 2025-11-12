@@ -2591,1272 +2591,6 @@ const EMBEDDED_RESTAURANT_DATA = {
   ],
   "Wow! Momo": [
     {
-      "ItemName": "Steam Momo",
-      "Swiggy": 125,
-      "Zomato": 115,
-      "Own_App": 99
-    },
-    {
-      "ItemName": "Steam Momo",
-      "Swiggy": 149,
-      "Zomato": 139,
-      "Own_App": 119
-    },
-    {
-      "ItemName": "Steam Momo",
-      "Swiggy": 175,
-      "Zomato": 165,
-      "Own_App": 149
-    },
-    {
-      "ItemName": "Steam Momo",
-      "Swiggy": 185,
-      "Zomato": 175,
-      "Own_App": 159
-    },
-    {
-      "ItemName": "Steam Momo",
-      "Swiggy": 79,
-      "Zomato": 75,
-      "Own_App": 69
-    },
-    {
-      "ItemName": "Steam Momo",
-      "Swiggy": 79,
-      "Zomato": 75,
-      "Own_App": 69
-    },
-    {
-      "ItemName": "Steam Momo",
-      "Swiggy": 109,
-      "Zomato": 105,
-      "Own_App": 99
-    },
-    {
-      "ItemName": "Steam Momo",
-      "Swiggy": 109,
-      "Zomato": 105,
-      "Own_App": 99
-    },
-    {
-      "ItemName": "Steam Momo",
-      "Swiggy": 229,
-      "Zomato": 219,
-      "Own_App": 199
-    },
-    {
-      "ItemName": "Steam Momo",
-      "Swiggy": 239,
-      "Zomato": 229,
-      "Own_App": 209
-    },
-    {
-      "ItemName": "Steam Momo",
-      "Swiggy": 239,
-      "Zomato": 229,
-      "Own_App": 209
-    },
-    {
-      "ItemName": "Steam Momo",
-      "Swiggy": 259,
-      "Zomato": 249,
-      "Own_App": 229
-    },
-    {
-      "ItemName": "Fried Momo",
-      "Swiggy": 175,
-      "Zomato": 165,
-      "Own_App": 149
-    },
-    {
-      "ItemName": "Fried Momo",
-      "Swiggy": 185,
-      "Zomato": 175,
-      "Own_App": 159
-    },
-    {
-      "ItemName": "Fried Momo",
-      "Swiggy": 154,
-      "Zomato": 144,
-      "Own_App": 129
-    },
-    {
-      "ItemName": "Fried Momo",
-      "Swiggy": 164,
-      "Zomato": 154,
-      "Own_App": 139
-    },
-    {
-      "ItemName": "Fried Momo",
-      "Swiggy": 204,
-      "Zomato": 194,
-      "Own_App": 179
-    },
-    {
-      "ItemName": "Fried Momo",
-      "Swiggy": 214,
-      "Zomato": 204,
-      "Own_App": 189
-    },
-    {
-      "ItemName": "Fried Momo",
-      "Swiggy": 214,
-      "Zomato": 204,
-      "Own_App": 189
-    },
-    {
-      "ItemName": "Fried Momo",
-      "Swiggy": 224,
-      "Zomato": 214,
-      "Own_App": 199
-    },
-    {
-      "ItemName": "Fried Momo",
-      "Swiggy": 234,
-      "Zomato": 224,
-      "Own_App": 209
-    },
-    {
-      "ItemName": "Fried Momo",
-      "Swiggy": 240,
-      "Zomato": 230,
-      "Own_App": 215
-    },
-    {
-      "ItemName": "Pan-Fried Momo",
-      "Swiggy": 139,
-      "Zomato": 132,
-      "Own_App": 129
-    },
-    {
-      "ItemName": "Pan-Fried Momo",
-      "Swiggy": 139,
-      "Zomato": 132,
-      "Own_App": 129
-    },
-    {
-      "ItemName": "Pan-Fried Momo",
-      "Swiggy": 169,
-      "Zomato": 162,
-      "Own_App": 159
-    },
-    {
-      "ItemName": "Pan-Fried Momo",
-      "Swiggy": 139,
-      "Zomato": 132,
-      "Own_App": 129
-    },
-    {
-      "ItemName": "Pan-Fried Momo",
-      "Swiggy": 235,
-      "Zomato": 225,
-      "Own_App": 215
-    },
-    {
-      "ItemName": "Pan-Fried Momo",
-      "Swiggy": 245,
-      "Zomato": 235,
-      "Own_App": 225
-    },
-    {
-      "ItemName": "Pan-Fried Momo",
-      "Swiggy": 289,
-      "Zomato": 279,
-      "Own_App": 269
-    },
-    {
-      "ItemName": "Pan-Fried Momo",
-      "Swiggy": 299,
-      "Zomato": 289,
-      "Own_App": 279
-    },
-    {
-      "ItemName": "Pan-Fried Momo",
-      "Swiggy": 299,
-      "Zomato": 289,
-      "Own_App": 279
-    },
-    {
-      "ItemName": "Pan-Fried Momo",
-      "Swiggy": 319,
-      "Zomato": 309,
-      "Own_App": 299
-    },
-    {
-      "ItemName": "Pan-Fried Momo",
-      "Swiggy": 159,
-      "Zomato": 152,
-      "Own_App": 149
-    },
-    {
-      "ItemName": "Pan-Fried Momo",
-      "Swiggy": 159,
-      "Zomato": 152,
-      "Own_App": 149
-    },
-    {
-      "ItemName": "Pan-Fried Momo",
-      "Swiggy": 189,
-      "Zomato": 182,
-      "Own_App": 179
-    },
-    {
-      "ItemName": "Pan-Fried Momo",
-      "Swiggy": 159,
-      "Zomato": 152,
-      "Own_App": 149
-    },
-    {
-      "ItemName": "Pan-Fried Momo",
-      "Swiggy": 255,
-      "Zomato": 245,
-      "Own_App": 235
-    },
-    {
-      "ItemName": "Pan-Fried Momo",
-      "Swiggy": 265,
-      "Zomato": 255,
-      "Own_App": 245
-    },
-    {
-      "ItemName": "Pan-Fried Momo",
-      "Swiggy": 309,
-      "Zomato": 299,
-      "Own_App": 289
-    },
-    {
-      "ItemName": "Pan-Fried Momo",
-      "Swiggy": 319,
-      "Zomato": 309,
-      "Own_App": 299
-    },
-    {
-      "ItemName": "Pan-Fried Momo",
-      "Swiggy": 319,
-      "Zomato": 309,
-      "Own_App": 299
-    },
-    {
-      "ItemName": "Pan-Fried Momo",
-      "Swiggy": 339,
-      "Zomato": 329,
-      "Own_App": 319
-    },
-    {
-      "ItemName": "Chilli Momo",
-      "Swiggy": 349,
-      "Zomato": 339,
-      "Own_App": 319
-    },
-    {
-      "ItemName": "Chilli Momo",
-      "Swiggy": 369,
-      "Zomato": 359,
-      "Own_App": 339
-    },
-    {
-      "ItemName": "Chilli Momo",
-      "Swiggy": 189,
-      "Zomato": 179,
-      "Own_App": 169
-    },
-    {
-      "ItemName": "Chilli Momo",
-      "Swiggy": 189,
-      "Zomato": 179,
-      "Own_App": 169
-    },
-    {
-      "ItemName": "Chilli Momo",
-      "Swiggy": 255,
-      "Zomato": 245,
-      "Own_App": 235
-    },
-    {
-      "ItemName": "Chilli Momo",
-      "Swiggy": 265,
-      "Zomato": 255,
-      "Own_App": 245
-    },
-    {
-      "ItemName": "Chilli Momo",
-      "Swiggy": 319,
-      "Zomato": 309,
-      "Own_App": 299
-    },
-    {
-      "ItemName": "Chilli Momo",
-      "Swiggy": 339,
-      "Zomato": 329,
-      "Own_App": 319
-    },
-    {
-      "ItemName": "Chilli Momo",
-      "Swiggy": 329,
-      "Zomato": 319,
-      "Own_App": 309
-    },
-    {
-      "ItemName": "Chilli Momo",
-      "Swiggy": 269,
-      "Zomato": 259,
-      "Own_App": 249
-    },
-    {
-      "ItemName": "Peri Peri Momo",
-      "Swiggy": 225,
-      "Zomato": 215,
-      "Own_App": 199
-    },
-    {
-      "ItemName": "Peri Peri Momo",
-      "Swiggy": 245,
-      "Zomato": 235,
-      "Own_App": 219
-    },
-    {
-      "ItemName": "Peri Peri Momo",
-      "Swiggy": 139,
-      "Zomato": 129,
-      "Own_App": 119
-    },
-    {
-      "ItemName": "Peri Peri Momo",
-      "Swiggy": 159,
-      "Zomato": 149,
-      "Own_App": 139
-    },
-    {
-      "ItemName": "Tandoori Momo",
-      "Swiggy": 269,
-      "Zomato": 259,
-      "Own_App": 249
-    },
-    {
-      "ItemName": "Tandoori Momo",
-      "Swiggy": 289,
-      "Zomato": 279,
-      "Own_App": 269
-    },
-    {
-      "ItemName": "Moburg",
-      "Swiggy": 99,
-      "Zomato": 92,
-      "Own_App": 89
-    },
-    {
-      "ItemName": "Moburg",
-      "Swiggy": 109,
-      "Zomato": 102,
-      "Own_App": 99
-    },
-    {
-      "ItemName": "Moburg",
-      "Swiggy": 139,
-      "Zomato": 132,
-      "Own_App": 129
-    },
-    {
-      "ItemName": "Moburg",
-      "Swiggy": 149,
-      "Zomato": 142,
-      "Own_App": 139
-    },
-    {
-      "ItemName": "Sizzler Momo",
-      "Swiggy": 399,
-      "Zomato": 389,
-      "Own_App": 369
-    },
-    {
-      "ItemName": "Sizzler Momo",
-      "Swiggy": 419,
-      "Zomato": 409,
-      "Own_App": 389
-    },
-    {
-      "ItemName": "Sizzler Momo",
-      "Swiggy": 409,
-      "Zomato": 399,
-      "Own_App": 379
-    },
-    {
-      "ItemName": "Sizzler Momo",
-      "Swiggy": 439,
-      "Zomato": 429,
-      "Own_App": 409
-    },
-    {
-      "ItemName": "Sizzler Momo",
-      "Swiggy": 419,
-      "Zomato": 409,
-      "Own_App": 389
-    },
-    {
-      "ItemName": "Thukpa",
-      "Swiggy": 179,
-      "Zomato": 169,
-      "Own_App": 159
-    },
-    {
-      "ItemName": "Thukpa",
-      "Swiggy": 199,
-      "Zomato": 189,
-      "Own_App": 179
-    },
-    {
-      "ItemName": "Sides",
-      "Swiggy": 189,
-      "Zomato": 179,
-      "Own_App": 169
-    },
-    {
-      "ItemName": "Sides",
-      "Swiggy": 209,
-      "Zomato": 199,
-      "Own_App": 189
-    },
-    {
-      "ItemName": "Sides",
-      "Swiggy": 189,
-      "Zomato": 179,
-      "Own_App": 169
-    },
-    {
-      "ItemName": "Sides",
-      "Swiggy": 209,
-      "Zomato": 199,
-      "Own_App": 189
-    },
-    {
-      "ItemName": "Sides",
-      "Swiggy": 72,
-      "Zomato": 65,
-      "Own_App": 59
-    },
-    {
-      "ItemName": "Sides",
-      "Swiggy": 92,
-      "Zomato": 85,
-      "Own_App": 79
-    },
-    {
-      "ItemName": "Dessert",
-      "Swiggy": 69,
-      "Zomato": 62,
-      "Own_App": 59
-    },
-    {
-      "ItemName": "Dessert",
-      "Swiggy": 209,
-      "Zomato": 199,
-      "Own_App": 189
-    },
-    {
-      "ItemName": "Dessert",
-      "Swiggy": 109,
-      "Zomato": 102,
-      "Own_App": 99
-    },
-    {
-      "ItemName": "Dessert",
-      "Swiggy": 109,
-      "Zomato": 102,
-      "Own_App": 99
-    },
-    {
-      "ItemName": "Dessert",
-      "Swiggy": 109,
-      "Zomato": 102,
-      "Own_App": 99
-    },
-    {
-      "ItemName": "Dessert",
-      "Swiggy": 109,
-      "Zomato": 102,
-      "Own_App": 99
-    },
-    {
-      "ItemName": "Dessert",
-      "Swiggy": 109,
-      "Zomato": 102,
-      "Own_App": 99
-    },
-    {
-      "ItemName": "Dessert",
-      "Swiggy": 139,
-      "Zomato": 132,
-      "Own_App": 129
-    },
-    {
-      "ItemName": "Dessert",
-      "Swiggy": 120,
-      "Zomato": 113,
-      "Own_App": 110
-    },
-    {
-      "ItemName": "Dessert",
-      "Swiggy": 140,
-      "Zomato": 133,
-      "Own_App": 130
-    },
-    {
-      "ItemName": "Dessert",
-      "Swiggy": 140,
-      "Zomato": 133,
-      "Own_App": 130
-    },
-    {
-      "ItemName": "Dessert",
-      "Swiggy": 140,
-      "Zomato": 133,
-      "Own_App": 130
-    },
-    {
-      "ItemName": "Dessert",
-      "Swiggy": 170,
-      "Zomato": 163,
-      "Own_App": 160
-    },
-    {
-      "ItemName": "Dessert",
-      "Swiggy": 140,
-      "Zomato": 133,
-      "Own_App": 130
-    },
-    {
-      "ItemName": "Dessert",
-      "Swiggy": 140,
-      "Zomato": 133,
-      "Own_App": 130
-    },
-    {
-      "ItemName": "Dessert",
-      "Swiggy": 140,
-      "Zomato": 133,
-      "Own_App": 130
-    },
-    {
-      "ItemName": "Beverage",
-      "Swiggy": 59,
-      "Zomato": 55,
-      "Own_App": 49
-    },
-    {
-      "ItemName": "Beverage",
-      "Swiggy": 59,
-      "Zomato": 55,
-      "Own_App": 49
-    },
-    {
-      "ItemName": "Beverage",
-      "Swiggy": 59,
-      "Zomato": 55,
-      "Own_App": 49
-    },
-    {
-      "ItemName": "Beverage",
-      "Swiggy": 119,
-      "Zomato": 112,
-      "Own_App": 109
-    },
-    {
-      "ItemName": "Beverage",
-      "Swiggy": 119,
-      "Zomato": 112,
-      "Own_App": 109
-    },
-    {
-      "ItemName": "Beverage",
-      "Swiggy": 119,
-      "Zomato": 112,
-      "Own_App": 109
-    },
-    {
-      "ItemName": "Beverage",
-      "Swiggy": 119,
-      "Zomato": 112,
-      "Own_App": 109
-    },
-    {
-      "ItemName": "Beverage",
-      "Swiggy": 119,
-      "Zomato": 112,
-      "Own_App": 109
-    },
-    {
-      "ItemName": "Beverage",
-      "Swiggy": 159,
-      "Zomato": 152,
-      "Own_App": 149
-    },
-    {
-      "ItemName": "Beverage",
-      "Swiggy": 89,
-      "Zomato": 85,
-      "Own_App": 79
-    },
-    {
-      "ItemName": "Beverage",
-      "Swiggy": 149,
-      "Zomato": 142,
-      "Own_App": 139
-    },
-    {
-      "ItemName": "Beverage",
-      "Swiggy": 149,
-      "Zomato": 142,
-      "Own_App": 139
-    },
-    {
-      "ItemName": "Combo",
-      "Swiggy": 339,
-      "Zomato": 329,
-      "Own_App": 319
-    },
-    {
-      "ItemName": "Combo",
-      "Swiggy": 359,
-      "Zomato": 349,
-      "Own_App": 339
-    },
-    {
-      "ItemName": "Combo",
-      "Swiggy": 389,
-      "Zomato": 379,
-      "Own_App": 369
-    },
-    {
-      "ItemName": "Combo",
-      "Swiggy": 409,
-      "Zomato": 399,
-      "Own_App": 389
-    },
-    {
-      "ItemName": "Combo",
-      "Swiggy": 279,
-      "Zomato": 269,
-      "Own_App": 259
-    },
-    {
-      "ItemName": "Combo",
-      "Swiggy": 379,
-      "Zomato": 369,
-      "Own_App": 359
-    },
-    {
-      "ItemName": "Combo",
-      "Swiggy": 419,
-      "Zomato": 409,
-      "Own_App": 399
-    },
-    {
-      "ItemName": "Combo",
-      "Swiggy": 519,
-      "Zomato": 509,
-      "Own_App": 499
-    },
-    {
-      "ItemName": "Add-on",
-      "Swiggy": 39,
-      "Zomato": 35,
-      "Own_App": 29
-    },
-    {
-      "ItemName": "Add-on",
-      "Swiggy": 39,
-      "Zomato": 35,
-      "Own_App": 29
-    },
-    {
-      "ItemName": "Add-on",
-      "Swiggy": 19,
-      "Zomato": 15,
-      "Own_App": 12
-    },
-    {
-      "ItemName": "Add-on",
-      "Swiggy": 29,
-      "Zomato": 25,
-      "Own_App": 19
-    },
-    {
-      "ItemName": "Add-on",
-      "Swiggy": 29,
-      "Zomato": 25,
-      "Own_App": 19
-    },
-    {
-      "ItemName": "Add-on",
-      "Swiggy": 29,
-      "Zomato": 25,
-      "Own_App": 19
-    }
-  ],
-  "Shawarma Zone": [
-    {
-      "ItemName": "Shawarma Roll",
-      "Swiggy": 145,
-      "Zomato": 139,
-      "Own_App": 125
-    },
-    {
-      "ItemName": "Shawarma Roll",
-      "Swiggy": 155,
-      "Zomato": 148,
-      "Own_App": 135
-    },
-    {
-      "ItemName": "Shawarma Roll",
-      "Swiggy": 160,
-      "Zomato": 148,
-      "Own_App": 140
-    },
-    {
-      "ItemName": "Shawarma Roll",
-      "Swiggy": 165,
-      "Zomato": 148,
-      "Own_App": 142
-    },
-    {
-      "ItemName": "Shawarma Roll",
-      "Swiggy": 219,
-      "Zomato": 199,
-      "Own_App": 189
-    },
-    {
-      "ItemName": "Shawarma Roll",
-      "Swiggy": 145,
-      "Zomato": 130,
-      "Own_App": 125
-    },
-    {
-      "ItemName": "Shawarma Roll",
-      "Swiggy": 155,
-      "Zomato": 140,
-      "Own_App": 135
-    },
-    {
-      "ItemName": "Shawarma Roll",
-      "Swiggy": 159,
-      "Zomato": 145,
-      "Own_App": 139
-    },
-    {
-      "ItemName": "Shawarma Roll",
-      "Swiggy": 149,
-      "Zomato": 135,
-      "Own_App": 129
-    },
-    {
-      "ItemName": "Shawarma Roll",
-      "Swiggy": 169,
-      "Zomato": 155,
-      "Own_App": 145
-    },
-    {
-      "ItemName": "Shawarma Roll",
-      "Swiggy": 135,
-      "Zomato": 125,
-      "Own_App": 119
-    },
-    {
-      "ItemName": "Shawarma Roll",
-      "Swiggy": 145,
-      "Zomato": 135,
-      "Own_App": 129
-    },
-    {
-      "ItemName": "Shawarma Roll",
-      "Swiggy": 125,
-      "Zomato": 115,
-      "Own_App": 109
-    },
-    {
-      "ItemName": "Shawarma Roll",
-      "Swiggy": 139,
-      "Zomato": 129,
-      "Own_App": 122
-    },
-    {
-      "ItemName": "Shawarma Roll",
-      "Swiggy": 119,
-      "Zomato": 109,
-      "Own_App": 105
-    },
-    {
-      "ItemName": "Shawarma Roll",
-      "Swiggy": 155,
-      "Zomato": 145,
-      "Own_App": 139
-    },
-    {
-      "ItemName": "Platter",
-      "Swiggy": 289,
-      "Zomato": 269,
-      "Own_App": 249
-    },
-    {
-      "ItemName": "Platter",
-      "Swiggy": 319,
-      "Zomato": 299,
-      "Own_App": 279
-    },
-    {
-      "ItemName": "Platter",
-      "Swiggy": 259,
-      "Zomato": 239,
-      "Own_App": 225
-    },
-    {
-      "ItemName": "Platter",
-      "Swiggy": 279,
-      "Zomato": 259,
-      "Own_App": 245
-    },
-    {
-      "ItemName": "Platter",
-      "Swiggy": 239,
-      "Zomato": 219,
-      "Own_App": 205
-    },
-    {
-      "ItemName": "Platter",
-      "Swiggy": 349,
-      "Zomato": 329,
-      "Own_App": 309
-    },
-    {
-      "ItemName": "Kebab",
-      "Swiggy": 159,
-      "Zomato": 149,
-      "Own_App": 139
-    },
-    {
-      "ItemName": "Kebab",
-      "Swiggy": 169,
-      "Zomato": 159,
-      "Own_App": 149
-    },
-    {
-      "ItemName": "Kebab",
-      "Swiggy": 179,
-      "Zomato": 169,
-      "Own_App": 159
-    },
-    {
-      "ItemName": "Kebab",
-      "Swiggy": 169,
-      "Zomato": 159,
-      "Own_App": 149
-    },
-    {
-      "ItemName": "Kebab",
-      "Swiggy": 149,
-      "Zomato": 139,
-      "Own_App": 129
-    },
-    {
-      "ItemName": "Kebab",
-      "Swiggy": 135,
-      "Zomato": 125,
-      "Own_App": 119
-    },
-    {
-      "ItemName": "Burger",
-      "Swiggy": 139,
-      "Zomato": 129,
-      "Own_App": 119
-    },
-    {
-      "ItemName": "Burger",
-      "Swiggy": 166,
-      "Zomato": 156,
-      "Own_App": 145
-    },
-    {
-      "ItemName": "Burger",
-      "Swiggy": 159,
-      "Zomato": 149,
-      "Own_App": 139
-    },
-    {
-      "ItemName": "Burger",
-      "Swiggy": 179,
-      "Zomato": 169,
-      "Own_App": 159
-    },
-    {
-      "ItemName": "Burger",
-      "Swiggy": 149,
-      "Zomato": 139,
-      "Own_App": 129
-    },
-    {
-      "ItemName": "Burger",
-      "Swiggy": 159,
-      "Zomato": 149,
-      "Own_App": 139
-    },
-    {
-      "ItemName": "Sides",
-      "Swiggy": 99,
-      "Zomato": 89,
-      "Own_App": 85
-    },
-    {
-      "ItemName": "Sides",
-      "Swiggy": 119,
-      "Zomato": 109,
-      "Own_App": 105
-    },
-    {
-      "ItemName": "Sides",
-      "Swiggy": 109,
-      "Zomato": 99,
-      "Own_App": 95
-    },
-    {
-      "ItemName": "Sides",
-      "Swiggy": 129,
-      "Zomato": 119,
-      "Own_App": 115
-    },
-    {
-      "ItemName": "Sides",
-      "Swiggy": 139,
-      "Zomato": 129,
-      "Own_App": 125
-    },
-    {
-      "ItemName": "Sides",
-      "Swiggy": 179,
-      "Zomato": 169,
-      "Own_App": 159
-    },
-    {
-      "ItemName": "Sides",
-      "Swiggy": 89,
-      "Zomato": 79,
-      "Own_App": 75
-    },
-    {
-      "ItemName": "Sides",
-      "Swiggy": 109,
-      "Zomato": 99,
-      "Own_App": 95
-    },
-    {
-      "ItemName": "Rice",
-      "Swiggy": 169,
-      "Zomato": 159,
-      "Own_App": 149
-    },
-    {
-      "ItemName": "Rice",
-      "Swiggy": 139,
-      "Zomato": 129,
-      "Own_App": 119
-    },
-    {
-      "ItemName": "Rice",
-      "Swiggy": 189,
-      "Zomato": 179,
-      "Own_App": 169
-    },
-    {
-      "ItemName": "Rice",
-      "Swiggy": 199,
-      "Zomato": 189,
-      "Own_App": 179
-    },
-    {
-      "ItemName": "Rice",
-      "Swiggy": 149,
-      "Zomato": 139,
-      "Own_App": 129
-    },
-    {
-      "ItemName": "Beverage",
-      "Swiggy": 69,
-      "Zomato": 59,
-      "Own_App": 55
-    },
-    {
-      "ItemName": "Beverage",
-      "Swiggy": 79,
-      "Zomato": 69,
-      "Own_App": 65
-    },
-    {
-      "ItemName": "Beverage",
-      "Swiggy": 99,
-      "Zomato": 89,
-      "Own_App": 85
-    },
-    {
-      "ItemName": "Beverage",
-      "Swiggy": 89,
-      "Zomato": 79,
-      "Own_App": 75
-    },
-    {
-      "ItemName": "Beverage",
-      "Swiggy": 59,
-      "Zomato": 49,
-      "Own_App": 45
-    },
-    {
-      "ItemName": "Beverage",
-      "Swiggy": 89,
-      "Zomato": 79,
-      "Own_App": 75
-    },
-    {
-      "ItemName": "Beverage",
-      "Swiggy": 79,
-      "Zomato": 69,
-      "Own_App": 65
-    },
-    {
-      "ItemName": "Beverage",
-      "Swiggy": 79,
-      "Zomato": 69,
-      "Own_App": 65
-    },
-    {
-      "ItemName": "Dessert",
-      "Swiggy": 69,
-      "Zomato": 59,
-      "Own_App": 55
-    },
-    {
-      "ItemName": "Dessert",
-      "Swiggy": 99,
-      "Zomato": 89,
-      "Own_App": 85
-    },
-    {
-      "ItemName": "Dessert",
-      "Swiggy": 79,
-      "Zomato": 69,
-      "Own_App": 65
-    },
-    {
-      "ItemName": "Dessert",
-      "Swiggy": 59,
-      "Zomato": 49,
-      "Own_App": 45
-    },
-    {
-      "ItemName": "Dessert",
-      "Swiggy": 89,
-      "Zomato": 79,
-      "Own_App": 75
-    },
-    {
-      "ItemName": "Combo",
-      "Swiggy": 219,
-      "Zomato": 199,
-      "Own_App": 189
-    },
-    {
-      "ItemName": "Combo",
-      "Swiggy": 199,
-      "Zomato": 179,
-      "Own_App": 169
-    },
-    {
-      "ItemName": "Combo",
-      "Swiggy": 189,
-      "Zomato": 169,
-      "Own_App": 159
-    },
-    {
-      "ItemName": "Combo",
-      "Swiggy": 229,
-      "Zomato": 209,
-      "Own_App": 199
-    },
-    {
-      "ItemName": "Combo",
-      "Swiggy": 289,
-      "Zomato": 269,
-      "Own_App": 249
-    },
-    {
-      "ItemName": "Combo",
-      "Swiggy": 499,
-      "Zomato": 479,
-      "Own_App": 459
-    },
-    {
-      "ItemName": "Wrap",
-      "Swiggy": 129,
-      "Zomato": 119,
-      "Own_App": 115
-    },
-    {
-      "ItemName": "Wrap",
-      "Swiggy": 119,
-      "Zomato": 109,
-      "Own_App": 105
-    },
-    {
-      "ItemName": "Wrap",
-      "Swiggy": 99,
-      "Zomato": 89,
-      "Own_App": 85
-    },
-    {
-      "ItemName": "Wrap",
-      "Swiggy": 109,
-      "Zomato": 99,
-      "Own_App": 95
-    },
-    {
-      "ItemName": "Wrap",
-      "Swiggy": 129,
-      "Zomato": 119,
-      "Own_App": 115
-    },
-    {
-      "ItemName": "Salad",
-      "Swiggy": 149,
-      "Zomato": 139,
-      "Own_App": 129
-    },
-    {
-      "ItemName": "Salad",
-      "Swiggy": 159,
-      "Zomato": 149,
-      "Own_App": 139
-    },
-    {
-      "ItemName": "Salad",
-      "Swiggy": 139,
-      "Zomato": 129,
-      "Own_App": 119
-    },
-    {
-      "ItemName": "Salad",
-      "Swiggy": 119,
-      "Zomato": 109,
-      "Own_App": 105
-    },
-    {
-      "ItemName": "Salad",
-      "Swiggy": 169,
-      "Zomato": 159,
-      "Own_App": 149
-    }
-  ],
-  "KFC": [
-    {
-      "ItemName": "Burger",
-      "Swiggy": 219,
-      "Zomato": 209,
-      "Own_App": 199
-    },
-    {
-      "ItemName": "Burger",
-      "Swiggy": 210,
-      "Zomato": 200,
-      "Own_App": 189
-    },
-    {
-      "ItemName": "Burger",
-      "Swiggy": 230,
-      "Zomato": 218,
-      "Own_App": 209
-    },
-    {
-      "ItemName": "Burger",
-      "Swiggy": 259,
-      "Zomato": 239,
-      "Own_App": 239
-    },
-    {
-      "ItemName": "Burger",
-      "Swiggy": 279,
-      "Zomato": 259,
-      "Own_App": 259
-    },
-    {
-      "ItemName": "Burger",
-      "Swiggy": 269,
-      "Zomato": 259,
-      "Own_App": 249
-    },
-    {
-      "ItemName": "Chicken",
-      "Swiggy": 239,
-      "Zomato": 229,
-      "Own_App": 229
-    },
-    {
-      "ItemName": "Chicken",
-      "Swiggy": 459,
-      "Zomato": 439,
-      "Own_App": 439
-    },
-    {
-      "ItemName": "Chicken",
-      "Swiggy": 179,
-      "Zomato": 179,
-      "Own_App": 169
-    },
-    {
-      "ItemName": "Chicken",
-      "Swiggy": 299,
-      "Zomato": 289,
-      "Own_App": 279
-    },
-    {
-      "ItemName": "Roll",
-      "Swiggy": 129,
-      "Zomato": 119,
-      "Own_App": 119
-    },
-    {
-      "ItemName": "Roll",
-      "Swiggy": 189,
-      "Zomato": 169,
-      "Own_App": 169
-    },
-    {
-      "ItemName": "Rice Bowl",
-      "Swiggy": 239,
-      "Zomato": 229,
-      "Own_App": 229
-    },
-    {
-      "ItemName": "Rice Bowl",
-      "Swiggy": 209,
-      "Zomato": 199,
-      "Own_App": 199
-    },
-    {
-      "ItemName": "Side",
-      "Swiggy": 109,
-      "Zomato": 99,
-      "Own_App": 99
-    },
-    {
-      "ItemName": "Dessert",
-      "Swiggy": 119,
-      "Zomato": 109,
-      "Own_App": 109
-    },
-    {
-      "ItemName": "Beverage",
-      "Swiggy": 85,
-      "Zomato": 79,
-      "Own_App": 75
-    }
-  ],
-  "Behrouz Biryani": [
-    {
       "ItemName": "Biryani",
       "Swiggy": 365,
       "Zomato": 349,
@@ -4306,8 +3040,208 @@ const EMBEDDED_RESTAURANT_DATA = {
       "Zomato": 585,
       "Own_App": 565
     }
+  ],
+  "Golden Wok": [
+    {
+      "ItemName": "Veg Fried Rice",
+      "Category": "Fried Rice",
+      "Swiggy": 150,
+      "Zomato": 140,
+      "Own_App": 130
+    },
+    {
+      "ItemName": "Chicken Fried Rice",
+      "Category": "Fried Rice",
+      "Swiggy": 180,
+      "Zomato": 170,
+      "Own_App": 160
+    },
+    {
+      "ItemName": "Egg Fried Rice",
+      "Category": "Fried Rice",
+      "Swiggy": 160,
+      "Zomato": 150,
+      "Own_App": 140
+    },
+    {
+      "ItemName": "Schezwan Fried Rice",
+      "Category": "Fried Rice",
+      "Swiggy": 170,
+      "Zomato": 160,
+      "Own_App": 150
+    },
+    {
+      "ItemName": "Mixed Fried Rice",
+      "Category": "Fried Rice",
+      "Swiggy": 190,
+      "Zomato": 180,
+      "Own_App": 170
+    },
+    {
+      "ItemName": "Prawn Fried Rice",
+      "Category": "Fried Rice",
+      "Swiggy": 220,
+      "Zomato": 210,
+      "Own_App": 200
+    },
+    {
+      "ItemName": "Vegetable Fried Rice",
+      "Category": "Fried Rice",
+      "Swiggy": 140,
+      "Zomato": 130,
+      "Own_App": 120
+    },
+    {
+      "ItemName": "Spicy Fried Rice",
+      "Category": "Fried Rice",
+      "Swiggy": 175,
+      "Zomato": 165,
+      "Own_App": 155
+    },
+    {
+      "ItemName": "Hakka Fried Rice",
+      "Category": "Fried Rice",
+      "Swiggy": 185,
+      "Zomato": 175,
+      "Own_App": 165
+    },
+    {
+      "ItemName": "Singapore Fried Rice",
+      "Category": "Fried Rice",
+      "Swiggy": 195,
+      "Zomato": 185,
+      "Own_App": 175
+    },
+    {
+      "ItemName": "Thai Fried Rice",
+      "Category": "Fried Rice",
+      "Swiggy": 205,
+      "Zomato": 195,
+      "Own_App": 185
+    },
+    {
+      "ItemName": "American Fried Rice",
+      "Category": "Fried Rice",
+      "Swiggy": 215,
+      "Zomato": 205,
+      "Own_App": 195
+    },
+    {
+      "ItemName": "Kimchi Fried Rice",
+      "Category": "Fried Rice",
+      "Swiggy": 225,
+      "Zomato": 215,
+      "Own_App": 205
+    },
+    {
+      "ItemName": "Garlic Fried Rice",
+      "Category": "Fried Rice",
+      "Swiggy": 155,
+      "Zomato": 145,
+      "Own_App": 135
+    }
+  ],
+  "Koliwada": [
+    {
+      "ItemName": "Veg Fried Rice",
+      "Category": "Fried Rice",
+      "Swiggy": 160,
+      "Zomato": 150,
+      "Own_App": 140
+    },
+    {
+      "ItemName": "Chicken Fried Rice",
+      "Category": "Fried Rice",
+      "Swiggy": 190,
+      "Zomato": 180,
+      "Own_App": 170
+    },
+    {
+      "ItemName": "Egg Fried Rice",
+      "Category": "Fried Rice",
+      "Swiggy": 170,
+      "Zomato": 160,
+      "Own_App": 150
+    },
+    {
+      "ItemName": "Schezwan Fried Rice",
+      "Category": "Fried Rice",
+      "Swiggy": 180,
+      "Zomato": 170,
+      "Own_App": 160
+    },
+    {
+      "ItemName": "Mixed Fried Rice",
+      "Category": "Fried Rice",
+      "Swiggy": 200,
+      "Zomato": 190,
+      "Own_App": 180
+    },
+    {
+      "ItemName": "Prawn Fried Rice",
+      "Category": "Fried Rice",
+      "Swiggy": 230,
+      "Zomato": 220,
+      "Own_App": 210
+    },
+    {
+      "ItemName": "Vegetable Fried Rice",
+      "Category": "Fried Rice",
+      "Swiggy": 150,
+      "Zomato": 140,
+      "Own_App": 130
+    },
+    {
+      "ItemName": "Spicy Fried Rice",
+      "Category": "Fried Rice",
+      "Swiggy": 185,
+      "Zomato": 175,
+      "Own_App": 165
+    },
+    {
+      "ItemName": "Hakka Fried Rice",
+      "Category": "Fried Rice",
+      "Swiggy": 195,
+      "Zomato": 185,
+      "Own_App": 175
+    },
+    {
+      "ItemName": "Singapore Fried Rice",
+      "Category": "Fried Rice",
+      "Swiggy": 205,
+      "Zomato": 195,
+      "Own_App": 185
+    },
+    {
+      "ItemName": "Thai Fried Rice",
+      "Category": "Fried Rice",
+      "Swiggy": 215,
+      "Zomato": 205,
+      "Own_App": 195
+    },
+    {
+      "ItemName": "American Fried Rice",
+      "Category": "Fried Rice",
+      "Swiggy": 225,
+      "Zomato": 215,
+      "Own_App": 205
+    },
+    {
+      "ItemName": "Kimchi Fried Rice",
+      "Category": "Fried Rice",
+      "Swiggy": 235,
+      "Zomato": 225,
+      "Own_App": 215
+    },
+    {
+      "ItemName": "Garlic Fried Rice",
+      "Category": "Fried Rice",
+      "Swiggy": 165,
+      "Zomato": 155,
+      "Own_App": 145
+    }
   ]
 };
 
-console.log('📊 Embedded restaurant data loaded!');
+console.log(' Embedded restaurant data loaded!');
 console.log('Available restaurants:', Object.keys(EMBEDDED_RESTAURANT_DATA));

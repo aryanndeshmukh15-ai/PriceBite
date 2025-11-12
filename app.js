@@ -11,13 +11,13 @@ const app = {
     foodCategories: [
         { "name": "Pizza", "emoji": "🍕", "id": "pizza" },
         { "name": "Burger", "emoji": "🍔", "id": "burger" },
+        { "name": "Fried Rice", "emoji": "🍚", "id": "friedrice" },
         { "name": "Chicken", "emoji": "🍗", "id": "chicken" },
         { "name": "Taco", "emoji": "🌮", "id": "taco" },
         { "name": "Biryani", "emoji": "🍛", "id": "biryani" },
         { "name": "Shawarma", "emoji": "🥙", "id": "shawarma" },
         { "name": "Momos", "emoji": "🥟", "id": "momos" },
-        { "name": "Pasta", "emoji": "🍝", "id": "pasta" },
-        { "name": "Sandwich", "emoji": "🥪", "id": "sandwich" }
+        { "name": "Pasta", "emoji": "🍝", "id": "pasta" }
     ],
     restaurants: {
         "pizza": [
@@ -44,7 +44,10 @@ const app = {
             { "name": "Wow! Momo", "icon": "wowmomo_logo.jpg", "id": "wowmomo", "sheetName": "Wow! Momo", "isImage": true }
         ],
         "pasta": [],
-        "sandwich": []
+        "friedrice": [
+            { "name": "Golden Wok Restaurant", "icon": "golden wok image.webp", "id": "goldenwok", "sheetName": "Golden Wok", "isImage": true },
+            { "name": "Koliwada", "icon": "Koliwada-Chicken-1024x665.jpg", "id": "koliwada", "sheetName": "Koliwada", "isImage": true }
+        ]
     }
 };
 
@@ -391,31 +394,22 @@ function selectRestaurant(restaurant) {
             renderRestaurantMenu(menuData);
         } else {
             console.log('❌ No matching data found for:', restaurant.name);
-            if (excelUploadSection) excelUploadSection.style.display = 'block';
+            if (excelUploadSection) excelUploadSection.style.display = 'none';
             if (restaurantTableContainer) {
                 restaurantTableContainer.innerHTML = `
                     <div style="padding: 20px; text-align: center; color: #666;">
-                        <p>No menu data found for ${restaurant.name}</p>
-                        <p>Available sheets: ${Object.keys(app.excelData).join(', ')}</p>
-                        <button onclick="document.getElementById('excel-file-input').click()" 
-                                style="padding: 10px 20px; background: #e74c3c; color: white; border: none; border-radius: 5px; cursor: pointer; margin: 10px;">
-                            📁 Re-upload Excel File
-                        </button>
-                        <button onclick="console.log('Debug - App data:', app.excelData)" 
-                                style="padding: 10px 20px; background: #007bff; color: white; border: none; border-radius: 5px; cursor: pointer; margin: 10px;">
-                            🔍 Debug Data
-                        </button>
+                        <p>No menu data available for ${restaurant.name}</p>
                     </div>
                 `;
             }
         }
     } else {
-        console.log('📁 No Excel data, showing upload section');
-        if (excelUploadSection) excelUploadSection.style.display = 'block';
+        console.log('📁 No Excel data, hiding upload section');
+        if (excelUploadSection) excelUploadSection.style.display = 'none';
         if (restaurantTableContainer) {
             restaurantTableContainer.innerHTML = `
                 <div style="padding: 20px; text-align: center; color: #666;">
-                    <p>Please upload restaurants.xlsx to view ${restaurant.name} menu with price comparison</p>
+                    <p>No menu data available for ${restaurant.name}</p>
                 </div>
             `;
         }
@@ -475,13 +469,16 @@ function renderRestaurantMenu(menuData) {
     }
     
     const restaurantName = app.selectedRestaurant ? app.selectedRestaurant.name : 'Restaurant';
+    const hideOwnApp = (restaurantName === 'Golden Wok Restaurant' || restaurantName === 'Koliwada');
     
     let html = '<div class="table-container"><table class="menu-table"><thead><tr>';
     html += '<th>Item Name</th>';
     html += '<th>Category</th>';
     html += '<th class="price-header">Price on Swiggy</th>';
     html += '<th class="price-header">Price on Zomato</th>';
-    html += `<th class="price-header">Price on ${restaurantName} App</th>`;
+    if (!hideOwnApp) {
+        html += `<th class="price-header">Price on ${restaurantName} App</th>`;
+    }
     html += '<th class="cart-header">Add to Cart</th>';
     html += '</tr></thead><tbody>';
     
@@ -491,9 +488,11 @@ function renderRestaurantMenu(menuData) {
         html += `<td>${item.Category || ''}</td>`;
         html += `<td class="price-cell price-swiggy">${item.Swiggy ? '₹' + item.Swiggy : '-'}</td>`;
         html += `<td class="price-cell price-zomato">${item.Zomato ? '₹' + item.Zomato : '-'}</td>`;
-        html += `<td class="price-cell price-own-app">${item.Own_App ? '₹' + item.Own_App : '-'}</td>`;
+        if (!hideOwnApp) {
+            html += `<td class="price-cell price-own-app">${item.Own_App ? '₹' + item.Own_App : '-'}</td>`;
+        }
         html += `<td class="cart-cell">
-            <button class="add-to-cart-btn" onclick="addToCart('${item.ItemName}', '${item.Category}', ${item.Swiggy || 0}, ${item.Zomato || 0}, ${item.Own_App || 0})" 
+            <button class="add-to-cart-btn" onclick="addToCart('${item.ItemName}', '${item.Category}', ${item.Swiggy || 0}, ${item.Zomato || 0}, ${hideOwnApp ? 0 : (item.Own_App || 0)})" 
                     style="background: #e74c3c; color: white; border: none; padding: 8px 12px; border-radius: 4px; cursor: pointer; font-size: 12px;">
                 🛒 Add to Cart
             </button>
@@ -556,23 +555,32 @@ function loadEmbeddedData() {
 }
 
 function autoLoadExcelFile() {
-    console.log('🔄 Auto-loading restaurants.xlsx...');
+    console.log('🔄 Auto-loading Excel files...');
     
-    fetch('./restaurants.xlsx')
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('File not found');
-            }
-            return response.arrayBuffer();
-        })
-        .then(arrayBuffer => {
-            console.log('✅ Excel file fetched successfully');
-            processExcelFile(arrayBuffer);
-        })
-        .catch(error => {
-            console.log('❌ Auto-load failed:', error.message);
-            console.log('File will need to be uploaded manually');
-        });
+    const files = [
+        './kfc_price_comparison.xlsx',
+        './behrouz_price_comparison.xlsx',
+        './wow_momo_price_comparison.xlsx',
+        './Zomato_Swiggy_Price_Comparison_2.xlsx'
+    ];
+    
+    files.forEach(file => {
+        fetch(file)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`File not found: ${file}`);
+                }
+                return response.arrayBuffer();
+            })
+            .then(arrayBuffer => {
+                console.log(`✅ Excel file fetched: ${file}`);
+                processExcelFile(arrayBuffer);
+            })
+            .catch(error => {
+                console.log(`❌ Auto-load failed for ${file}:`, error.message);
+                console.log('File will need to be uploaded manually');
+            });
+    });
 }
 
 function processExcelFile(arrayBuffer) {
@@ -580,7 +588,7 @@ function processExcelFile(arrayBuffer) {
         console.log('📊 Processing Excel file...');
         const workbook = XLSX.read(arrayBuffer, { type: 'array' });
         
-        app.excelData = {};
+        if (!app.excelData) app.excelData = {};
         
         workbook.SheetNames.forEach(sheetName => {
             const worksheet = workbook.Sheets[sheetName];
