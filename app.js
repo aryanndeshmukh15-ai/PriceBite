@@ -9,6 +9,7 @@ const app = {
     excelData: null,
     cart: [],
     foodCategories: [
+        
         { "name": "Pizza", "emoji": "🍕", "id": "pizza" },
         { "name": "Burger", "emoji": "🍔", "id": "burger" },
         { "name": "Fried Rice", "emoji": "🍚", "id": "friedrice" },
@@ -369,22 +370,91 @@ function selectRestaurant(restaurant) {
         
         // Try to find matching data
         let menuData = null;
+        const availableSheets = Object.keys(app.excelData);
         
-        // First try exact match
-        if (app.excelData[restaurant.sheetName]) {
-            menuData = app.excelData[restaurant.sheetName];
-        }
-        // Try partial match
-        else {
-            const availableSheets = Object.keys(app.excelData);
-            const matchingSheet = availableSheets.find(sheet => 
-                sheet.toLowerCase().includes(restaurant.name.toLowerCase()) ||
-                restaurant.name.toLowerCase().includes(sheet.toLowerCase())
-            );
+        // Special handling for KFC
+        if (restaurant.name === 'KFC') {
+            // Try different possible sheet names for KFC
+            const possibleKfcSheets = [
+                'KFC',
+                'KFC Menu',
+                'KFC_Price_List',
+                'KFC Prices',
+                'KFC_2025',
+                ...availableSheets.filter(sheet => sheet.toLowerCase().includes('kfc'))
+            ];
             
-            if (matchingSheet) {
-                console.log(`✅ Found matching sheet: ${matchingSheet} for ${restaurant.name}`);
-                menuData = app.excelData[matchingSheet];
+            for (const sheetName of possibleKfcSheets) {
+                if (app.excelData[sheetName]) {
+                    console.log(`✅ Found KFC data in sheet: ${sheetName}`);
+                    menuData = app.excelData[sheetName];
+                    break;
+                }
+            }
+        }
+        
+        // If KFC not found yet or it's another restaurant, try normal matching
+        if (!menuData) {
+            // 1. Try exact match with sheetName
+            if (app.excelData[restaurant.sheetName]) {
+                console.log(`✅ Found exact match for sheet: ${restaurant.sheetName}`);
+                menuData = app.excelData[restaurant.sheetName];
+            }
+            // 2. Try matching with restaurant name (case insensitive)
+            else {
+                const normalizedRestaurantName = restaurant.name.toLowerCase().replace(/[^a-z0-9]/g, '');
+                
+                // Try different matching patterns
+                const matchingSheet = availableSheets.find(sheet => {
+                    const normalizedSheet = sheet.toLowerCase().replace(/[^a-z0-9]/g, '');
+                    
+                    // Check for direct inclusion
+                    if (normalizedSheet.includes(normalizedRestaurantName) || 
+                        normalizedRestaurantName.includes(normalizedSheet)) {
+                        return true;
+                    }
+                    
+                    // Check for common abbreviations
+                    const commonAbbr = {
+                        'kfc': 'kentucky',
+                        'bk': 'burgerking',
+                        'mcd': 'mcdonalds',
+                        'pizzahut': 'pizza hut',
+                        'tacobell': 'taco bell',
+                        'behrouz': 'behrouz biryani',
+                        'shawarmazone': 'shawarma zone',
+                        'wowmomo': 'wow momo'
+                    };
+                    
+                    // Check if either name matches common abbreviations
+                    for (const [abbr, full] of Object.entries(commonAbbr)) {
+                        if ((normalizedSheet.includes(abbr) && normalizedRestaurantName.includes(full)) ||
+                            (normalizedSheet.includes(full) && normalizedRestaurantName.includes(abbr))) {
+                            return true;
+                        }
+                    }
+                    
+                    return false;
+                });
+                
+                if (matchingSheet) {
+                    console.log(`✅ Found matching sheet: ${matchingSheet} for ${restaurant.name}`);
+                    menuData = app.excelData[matchingSheet];
+                } else {
+                    console.log('Available sheets:', availableSheets);
+                    console.log(`Could not find matching sheet for: ${restaurant.name} (tried: ${restaurant.sheetName})`);
+                    
+                    // As a last resort, try to find any sheet that might contain the data
+                    const partialMatch = availableSheets.find(sheet => 
+                        sheet.toLowerCase().includes(restaurant.name.toLowerCase()) ||
+                        restaurant.name.toLowerCase().includes(sheet.toLowerCase())
+                    );
+                    
+                    if (partialMatch) {
+                        console.log(`⚠️ Using partial match for ${restaurant.name}: ${partialMatch}`);
+                        menuData = app.excelData[partialMatch];
+                    }
+                }
             }
         }
         
@@ -554,33 +624,31 @@ function loadEmbeddedData() {
     }
 }
 
-function autoLoadExcelFile() {
-    console.log('🔄 Auto-loading Excel files...');
+async function autoLoadExcelFile() {
+    console.log('🔄 Loading restaurant data from embedded data...');
     
-    const files = [
-        './kfc_price_comparison.xlsx',
-        './behrouz_price_comparison.xlsx',
-        './wow_momo_price_comparison.xlsx',
-        './Zomato_Swiggy_Price_Comparison_2.xlsx'
-    ];
-    
-    files.forEach(file => {
-        fetch(file)
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error(`File not found: ${file}`);
-                }
-                return response.arrayBuffer();
-            })
-            .then(arrayBuffer => {
-                console.log(`✅ Excel file fetched: ${file}`);
-                processExcelFile(arrayBuffer);
-            })
-            .catch(error => {
-                console.log(`❌ Auto-load failed for ${file}:`, error.message);
-                console.log('File will need to be uploaded manually');
-            });
-    });
+    try {
+        // Try to load embedded data first
+        if (typeof EMBEDDED_RESTAURANT_DATA !== 'undefined') {
+            app.excelData = EMBEDDED_RESTAURANT_DATA;
+            console.log('✅ Loaded embedded restaurant data');
+            console.log('📊 Available restaurants:', Object.keys(app.excelData));
+            
+            // If a restaurant is already selected, refresh its menu
+            if (app.selectedRestaurant) {
+                console.log('🔄 Refreshing current restaurant menu...');
+                selectRestaurant(app.selectedRestaurant);
+            }
+            
+            return true;
+        } else {
+            throw new Error('Embedded restaurant data not found');
+        }
+    } catch (error) {
+        console.error('❌ Error loading embedded data:', error);
+        showErrorMessage('Failed to load restaurant data. Please refresh the page.');
+        return false;
+    }
 }
 
 function processExcelFile(arrayBuffer) {
@@ -1229,5 +1297,50 @@ function showCartSummaryBeforeRedirect(platform) {
         }
     };
 }
+
+// Wait for XLSX to be available
+function waitForXLSX() {
+    return new Promise((resolve) => {
+        const checkXLSX = () => {
+            if (typeof XLSX !== 'undefined') {
+                console.log('✅ XLSX is available');
+                resolve();
+            } else {
+                console.log('⏳ Waiting for XLSX to load...');
+                setTimeout(checkXLSX, 100);
+            }
+        };
+        checkXLSX();
+    });
+}
+
+// Initialize the app when both DOM and XLSX are ready
+async function initializeApp() {
+    console.log('🚀 Initializing PriceBite App...');
+    
+    try {
+        // Wait for XLSX to be available
+        await waitForXLSX();
+        
+        // Setup navigation and other UI components
+        setupNavigation();
+        setupSearch();
+        
+        // Load the Excel data
+        const success = await autoLoadExcelFile();
+        if (success) {
+            console.log('✅ App initialization complete');
+        } else {
+            console.error('❌ App initialization failed - could not load restaurant data');
+            showErrorMessage('Failed to load restaurant data. Please check the console for details.');
+        }
+    } catch (error) {
+        console.error('❌ Error initializing app:', error);
+        showErrorMessage('Failed to initialize the application. Please refresh the page.');
+    }
+}
+
+// Start the app when the DOM is ready
+document.addEventListener('DOMContentLoaded', initializeApp);
 
 console.log('📱 PriceBite Simple App Loaded!');
